@@ -15,14 +15,16 @@ by impact.
 |---|---|---|
 | 1 | **3–6 real projects.** Title, one-line outcome, description, tech, screenshot, links. Until you add them the Projects section shows an honest "coming soon" empty state — placeholder cards are dev-only and never ship. | `src/data/projects.ts` |
 | 2 | **Achievement bullets per role** — what you built and what it changed. The current bullets describe the scope of each job factually; nothing is invented, but nothing is impressive either. | `src/data/experience.ts` |
-| 3 | **A high-resolution portrait** (min 1200px short edge). Drop it in `public/img/` and set `portraitSrc`. Until then the About section shows a labelled placeholder. | `public/img/` + `src/data/profile.ts` |
-| 4 | **Your CV as a PDF** at `public/Irfaan-Rujbally-CV.pdf` — the "Download CV" button links straight to it. | `public/` |
-| 5 | **GitHub profile URL.** Set `githubUrl` and the GitHub links appear automatically (they stay hidden while it's empty). | `src/data/profile.ts` |
-| 6 | **A Formspree form ID** so the contact form actually sends. See "Contact form" below. | `.env` |
-| 7 | **Years of experience per technology** — `yearsOfUse` is 0 everywhere, which the UI reads as "not confirmed" and hides the bar for. | `src/data/skills.ts` |
-| 8 | **Check your skills list is complete.** The Languages line on the CV was cut off after "Java" in the copy provided. | `src/data/skills.ts` |
-| 9 | **Resolve one CV inconsistency.** The CV summary says "freelance developer in Europe", but the experience table puts the 2022 freelance year in Mauritius/Remote and the only French role is the 2021 Lyon 1 assistantship. The About copy currently avoids the claim. | `src/data/profile.ts` |
-| 10 | **Set the real URL** in `seo.url`, `index.html` (canonical + og:url), `public/robots.txt` and `public/sitemap.xml` once you know the deployed address. | several |
+| 3 | **Your CV as a PDF** at `public/Irfaan-Rujbally-CV.pdf` — the "Download CV" button links straight to it. | `public/` |
+| 4 | **GitHub profile URL.** Set `githubUrl` and the GitHub links appear automatically (they stay hidden while it's empty). | `src/data/profile.ts` |
+| 5 | **A Formspree form ID** so the contact form actually sends. See "Contact form" below. | `.env` |
+| 6 | **Years of experience per technology** — `yearsOfUse` is 0 everywhere, which the UI reads as "not confirmed" and hides the bar for. | `src/data/skills.ts` |
+| 7 | **Check your skills list is complete.** The Languages line on the CV was cut off after "Java" in the copy provided. | `src/data/skills.ts` |
+| 8 | **Resolve one CV inconsistency.** The CV summary says "freelance developer in Europe", but the experience table puts the 2022 freelance year in Mauritius/Remote and the only French role is the 2021 Lyon 1 assistantship. The About copy currently avoids the claim. | `src/data/profile.ts` |
+| 9 | **Set the real URL** in `seo.url`, `index.html` (canonical + og:url), `public/robots.txt` and `public/sitemap.xml` once you know the deployed address. | several |
+
+**Done:** the portrait is in at `public/img/irfaan-portrait.webp`, pre-cropped to
+the 4:5 the About slot expects.
 
 ---
 

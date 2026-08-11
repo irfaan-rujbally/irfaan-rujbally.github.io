@@ -40,13 +40,14 @@ export const About = () => (
             }}
           />
 
-          {/* TODO: replace with a real high-res portrait — set profile.portraitSrc. */}
           {profile.portraitSrc !== '' ? (
             <img
               src={asset(profile.portraitSrc)}
               alt={`${profile.name}, software engineer`}
               width={640}
               height={800}
+              loading="lazy"
+              decoding="async"
               className="aspect-[4/5] w-full rounded-panel border border-line object-cover shadow-[var(--shadow-lg)]"
             />
           ) : (

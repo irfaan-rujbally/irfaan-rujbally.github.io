@@ -4,7 +4,6 @@
  *
  * TODO BEFORE GOING LIVE — see README "Before going live":
  *   - githubUrl is empty. Fill it in or the GitHub links stay hidden.
- *   - portraitSrc points at a placeholder. Drop a real photo in public/img/.
  */
 
 export const profile = {
@@ -26,8 +25,18 @@ export const profile = {
   linkedinUrl: 'https://www.linkedin.com/in/irfaan-r-6a7a39152',
   githubUrl: '', // TODO: confirm with Irfaan
 
-  /** TODO: replace with a real high-resolution portrait (min 1200px short edge). */
-  portraitSrc: '',
+  /**
+   * Pre-cropped to the 4:5 the About slot expects, anchored on the face rather
+   * than the geometric centre — object-cover would otherwise crop the 4:3
+   * original blind. 869x1086 against a slot that renders 443px wide at every
+   * breakpoint, so it lands at ~2x: retina-sharp without shipping dead pixels.
+   *
+   * Widened to `string` because the object is `as const`: without it the value
+   * narrows to its own literal, and About's `!== ''` placeholder check becomes
+   * a type error rather than a runtime branch. Blank it and the placeholder
+   * comes back, which is the point.
+   */
+  portraitSrc: 'img/irfaan-portrait.webp' as string,
 
   cvPath: 'Irfaan-Rujbally-CV.pdf',
 
