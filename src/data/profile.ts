@@ -1,9 +1,6 @@
 /**
  * Every string a visitor reads lives in src/data/*.ts.
  * You can update the whole site without opening a component.
- *
- * TODO BEFORE GOING LIVE — see README "Before going live":
- *   - githubUrl is empty. Fill it in or the GitHub links stay hidden.
  */
 
 export const profile = {
@@ -23,7 +20,12 @@ export const profile = {
   phoneHref: 'tel:+23057131848',
   whatsappUrl: 'https://wa.me/23057131848',
   linkedinUrl: 'https://www.linkedin.com/in/irfaan-r-6a7a39152',
-  githubUrl: '', // TODO: confirm with Irfaan
+  /**
+   * Widened for the same reason as portraitSrc: the object is `as const`, so a
+   * literal here turns every `githubUrl !== ''` guard into a type error rather
+   * than a runtime check. Blank it and the GitHub links hide again.
+   */
+  githubUrl: 'https://github.com/irfaan-rujbally' as string,
 
   /**
    * Pre-cropped to the 4:5 the About slot expects, anchored on the face rather
@@ -87,6 +89,6 @@ export const seo = {
   description:
     'Software engineer in Mauritius building scalable web and mobile applications. Laravel, Vue, C# and React Native. Trained in France, available for projects worldwide.',
   /** TODO: set to the final deployed URL before going live. */
-  url: 'https://irfaan.github.io/',
+  url: 'https://irfaan-rujbally.github.io/',
   ogImage: 'og-image.png',
 } as const;
