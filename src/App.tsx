@@ -3,6 +3,7 @@ import { useActiveSection } from '@/hooks/useActiveSection';
 import { Nav } from '@/components/layout/Nav';
 import { SectionIndex } from '@/components/layout/SectionIndex';
 import { Footer } from '@/components/layout/Footer';
+import { AtomField } from '@/components/fx/AtomField';
 import { Cursor } from '@/components/fx/Cursor';
 import { NoiseOverlay } from '@/components/fx/NoiseOverlay';
 import { Hero } from '@/components/sections/Hero';
@@ -37,12 +38,15 @@ export const App = () => {
         Skip to content
       </a>
 
+      <AtomField />
       <Cursor />
       <NoiseOverlay />
       <Nav active={active} />
       <SectionIndex active={active} />
 
-      <main id="main">
+      {/* z-10 keeps content above the fixed atom field, which sits at z-0. */}
+      <main id="main" className="relative z-10">
+
         <Hero />
         <About />
         <Skills />
@@ -52,7 +56,9 @@ export const App = () => {
         <Contact />
       </main>
 
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </>
   );
 };
