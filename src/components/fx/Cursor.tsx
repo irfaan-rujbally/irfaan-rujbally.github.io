@@ -23,7 +23,7 @@ const HEAD_ALPHA = 0.15;
 const TAIL_ALPHA = 0.02;
 
 /*
- * The pointer itself: an accent dot tracking the mouse exactly, inside a ring
+ * The pointer itself: a solid dot tracking the mouse exactly, inside a ring
  * that eases after it. The ring is what carries the state — it swells over
  * anything clickable and dips on press, which is the only affordance left once
  * the OS arrow is hidden.
@@ -49,9 +49,15 @@ const INTERACTIVE = 'a, button, input, textarea, select, summary, [role="button"
  * lighter background lifted it — same numbers, dimmer result. The values are
  * tuned so the trail reads at the reference's strength, not to match on paper.
  */
+/*
+ * `head` is the solid pointer dot, kept in the same hue as that theme's trail so
+ * the pointer reads as the head of the comet rather than a separate object. It
+ * is a flat fill at full opacity, not one of the low alphas above — those are
+ * tuned for a 30x overlapping glow and would be invisible on a single 7px dot.
+ */
 const PALETTE = {
-  dark: { blend: 'screen', glow: '214, 224, 238', lo: '128, 140, 158', hi: '240, 246, 252', gain: 1.4 },
-  light: { blend: 'multiply', glow: '190, 110, 20', lo: '120, 70, 10', hi: '210, 150, 60', gain: 2.6 },
+  dark: { blend: 'screen', glow: '214, 224, 238', lo: '128, 140, 158', hi: '240, 246, 252', gain: 1.4, head: '226, 234, 246' },
+  light: { blend: 'multiply', glow: '190, 110, 20', lo: '120, 70, 10', hi: '210, 150, 60', gain: 2.6, head: '183, 134, 32' },
 } as const;
 
 const lerpValue = (from: number, to: number, t: number): number => from + (to - from) * t;
@@ -67,11 +73,11 @@ export const Cursor = () => {
   const headRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
+  const palette = isDark ? PALETTE.dark : PALETTE.light;
+
   // Per-dot appearance. Independent of position, so it is only recomputed when
   // the theme flips — the animation loop never touches these.
   const dots = useMemo(() => {
-    const palette = isDark ? PALETTE.dark : PALETTE.light;
-
     return Array.from({ length: COUNT }, (_, i) => {
       const t = i / (COUNT - 1);
       const size = lerpValue(HEAD_SIZE, TAIL_SIZE, t);
@@ -88,7 +94,7 @@ export const Cursor = () => {
         ].join(', '),
       };
     });
-  }, [isDark]);
+  }, [palette]);
 
   useEffect(() => {
     if (!enabled) return undefined;
@@ -234,7 +240,8 @@ export const Cursor = () => {
       />
       <div
         ref={headRef}
-        className="absolute top-0 left-0 size-[7px] rounded-full bg-accent will-change-transform"
+        className="absolute top-0 left-0 size-[7px] rounded-full will-change-transform"
+        style={{ backgroundColor: `rgb(${palette.head})` }}
       />
     </div>
   );
