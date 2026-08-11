@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+
+    <title>Irfaan Rujbally — Software Engineer | Web &amp; Mobile Apps, Mauritius</title>
+    <meta
+      name="description"
+      content="Software engineer in Mauritius building scalable web and mobile applications. Laravel, Vue, C# and React Native. Trained in France, available for projects worldwide."
+    />
+    <meta name="author" content="Irfaan Rujbally" />
+    <link rel="canonical" href="https://irfaan.github.io/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Irfaan Rujbally" />
+    <meta property="og:title" content="Irfaan Rujbally — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Software engineer in Mauritius building scalable web and mobile applications. Laravel, Vue, C# and React Native."
+    />
+    <meta property="og:url" content="https://irfaan.github.io/" />
+    <meta property="og:image" content="%BASE_URL%og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Irfaan Rujbally — Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Software engineer in Mauritius building scalable web and mobile applications."
+    />
+    <meta name="twitter:image" content="%BASE_URL%og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="manifest" href="%BASE_URL%site.webmanifest" />
+
+    <script>
+      // Set the theme before first paint so there is no light-mode flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem('ir-theme');
+          var dark =
+            stored === 'dark' ||
+            (stored === null &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

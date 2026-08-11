@@ -1,0 +1,13 @@
+{
+  "name": "Irfaan Rujbally — Software Engineer",
+  "short_name": "Irfaan Rujbally",
+  "description": "Software engineer in Mauritius building scalable web and mobile applications.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa",
+  "icons": [
+    { "src": "./favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "./apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

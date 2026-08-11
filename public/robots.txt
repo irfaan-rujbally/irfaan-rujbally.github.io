@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://irfaan.github.io/sitemap.xml
