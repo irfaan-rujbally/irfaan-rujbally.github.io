@@ -26,8 +26,8 @@ const supportsWebGL = (): boolean => {
 };
 
 /* 26 textured planes is a light scene, so the bar here is deliberately low —
-   only genuinely constrained hardware skips the canvas. Phones are handled
-   separately by the viewport check, which is the case that actually matters. */
+   only genuinely constrained hardware skips the canvas. Two cores or fewer is
+   well below any current phone, which is the point: phones get the globe. */
 const isWeakDevice = (): boolean =>
   typeof navigator !== 'undefined' &&
   typeof navigator.hardwareConcurrency === 'number' &&
@@ -44,9 +44,11 @@ export const SkillsGlobe = () => {
   const [webglOk] = useState(supportsWebGL);
   const [weak] = useState(isWeakDevice);
 
-  /* Small screens and low-core devices get the grid by default — the canvas is
-     opt-in there rather than forced onto a device that will struggle. */
-  const prefersGridByDefault = isMobile || weak || !webglOk;
+  /* The globe is the default everywhere it can actually run, phones included.
+     What remains are capability checks rather than preferences: no WebGL means
+     nothing would render at all, and <=2 cores means it would crawl. Both fall
+     back to the grid, and the toggle below still switches by hand either way. */
+  const prefersGridByDefault = weak || !webglOk;
   const [showGlobe, setShowGlobe] = useState(!prefersGridByDefault);
 
   const [filter, setFilter] = useState<Filter>('all');
