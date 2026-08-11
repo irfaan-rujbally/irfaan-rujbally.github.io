@@ -165,12 +165,6 @@
     color: #fff;
   }
 
-  /* Hide the native cursor only where the custom one is actually active. */
-  body[data-custom-cursor='on'],
-  body[data-custom-cursor='on'] * {
-    cursor: none;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
