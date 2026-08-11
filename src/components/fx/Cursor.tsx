@@ -23,19 +23,22 @@ const HEAD_ALPHA = 0.15;
 const TAIL_ALPHA = 0.02;
 
 /*
- * Two palettes because the effect is built on blend modes, and no single one
- * works on both themes: `screen` lightens, so it glows on near-black but goes
- * invisible on the light theme's #fafafa. Light mode therefore darkens with
- * `multiply` and a deeper amber, which keeps the warm comet read at a similar
- * strength against a pale background.
+ * Two palettes, differing in hue and in blend mode. `screen` lightens, so it
+ * glows on near-black but goes invisible on the light theme's #fafafa — light
+ * mode has to darken with `multiply` instead.
  *
- * `gain` scales the measured alphas. Dark sits above 1 because `screen` over a
+ * Light keeps the reference's warm gold. Dark runs cool silver, which is the
+ * brighter of the two: amber sits at ~0.72 relative luminance against silver's
+ * ~0.87, so the same alpha reads stronger here and `gain` is pulled down to
+ * compensate rather than left at the warm value.
+ *
+ * `gain` scales the measured alphas. Both sit above 1 because `screen` over a
  * near-black page returns the source colour unchanged, where the reference's
- * lighter background lifted it — same numbers, dimmer result. Both values are
- * tuned so the trail reads at the reference's strength, not to match it on paper.
+ * lighter background lifted it — same numbers, dimmer result. The values are
+ * tuned so the trail reads at the reference's strength, not to match on paper.
  */
 const PALETTE = {
-  dark: { blend: 'screen', glow: '255, 200, 120', lo: '150, 100, 50', hi: '255, 220, 150', gain: 1.7 },
+  dark: { blend: 'screen', glow: '214, 224, 238', lo: '128, 140, 158', hi: '240, 246, 252', gain: 1.4 },
   light: { blend: 'multiply', glow: '190, 110, 20', lo: '120, 70, 10', hi: '210, 150, 60', gain: 2.6 },
 } as const;
 
