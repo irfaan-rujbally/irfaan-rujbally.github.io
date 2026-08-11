@@ -1,0 +1,13 @@
+# This repo is LF everywhere. Without this, tools writing through the Windows
+# share commit CRLF instead, which rewrites the whole file in the diff and
+# buries the real change.
+* text=auto eol=lf
+
+# Never touch binary assets.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.woff2 binary
+*.pdf   binary
+*.ico   binary
