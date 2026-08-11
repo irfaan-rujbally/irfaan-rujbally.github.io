@@ -23,6 +23,18 @@ const HEAD_ALPHA = 0.15;
 const TAIL_ALPHA = 0.02;
 
 /*
+ * The pointer itself: an accent dot tracking the mouse exactly, inside a ring
+ * that eases after it. The ring is what carries the state — it swells over
+ * anything clickable and dips on press, which is the only affordance left once
+ * the OS arrow is hidden.
+ */
+const RING_LERP = 0.15;
+const SCALE_LERP = 0.14;
+const HOVER_SCALE = 1.9;
+const PRESS_SCALE = 0.75;
+const INTERACTIVE = 'a, button, input, textarea, select, summary, [role="button"], [data-magnetic]';
+
+/*
  * Two palettes, differing in hue and in blend mode. `screen` lightens, so it
  * glows on near-black but goes invisible on the light theme's #fafafa — light
  * mode has to darken with `multiply` instead.
@@ -51,6 +63,8 @@ export const Cursor = () => {
   const enabled = finePointer && !reduced;
 
   const dotRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   // Per-dot appearance. Independent of position, so it is only recomputed when
@@ -79,9 +93,17 @@ export const Cursor = () => {
   useEffect(() => {
     if (!enabled) return undefined;
 
+    // Replacing the OS arrow, so the native cursor has to go. Scoped to an
+    // attribute rather than a blanket rule, so it lifts the moment this
+    // component is disabled or unmounted.
+    document.body.setAttribute('data-custom-cursor', 'on');
+
     const start = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const pointer = { ...start };
     const trail = Array.from({ length: COUNT }, () => ({ ...start }));
+    const ring = { ...start };
+    let ringScale = 1;
+    let targetScale = 1;
 
     let frame = 0;
     let running = false;
@@ -92,6 +114,13 @@ export const Cursor = () => {
         if (node === null || node === undefined) continue;
         const { x, y } = trail[i];
         node.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
+      }
+
+      if (headRef.current !== null) {
+        headRef.current.style.transform = `translate3d(${pointer.x.toFixed(2)}px, ${pointer.y.toFixed(2)}px, 0) translate(-50%, -50%)`;
+      }
+      if (ringRef.current !== null) {
+        ringRef.current.style.transform = `translate3d(${ring.x.toFixed(2)}px, ${ring.y.toFixed(2)}px, 0) translate(-50%, -50%) scale(${ringScale.toFixed(3)})`;
       }
     };
 
@@ -110,9 +139,18 @@ export const Cursor = () => {
         if (settled && Math.abs(dx) + Math.abs(dy) > 0.1) settled = false;
       }
 
+      ring.x += (pointer.x - ring.x) * RING_LERP;
+      ring.y += (pointer.y - ring.y) * RING_LERP;
+      ringScale += (targetScale - ringScale) * SCALE_LERP;
+
+      // The ring and its scale gate parking too — without this the loop can
+      // stop while the ring is still easing in and leave it stranded.
+      if (Math.abs(pointer.x - ring.x) + Math.abs(pointer.y - ring.y) > 0.1) settled = false;
+      if (Math.abs(targetScale - ringScale) > 0.001) settled = false;
+
       draw();
 
-      // Park the loop once the tail has caught up. It restarts on the next
+      // Park the loop once everything has caught up. It restarts on the next
       // move, so an idle pointer costs no frames.
       if (settled) {
         running = false;
@@ -130,20 +168,38 @@ export const Cursor = () => {
     const onMove = (event: PointerEvent): void => {
       pointer.x = event.clientX;
       pointer.y = event.clientY;
+
+      const target = event.target as HTMLElement | null;
+      targetScale = target?.closest(INTERACTIVE) != null ? HOVER_SCALE : 1;
+
       setVisible(true);
       wake();
     };
 
     const onLeave = (): void => setVisible(false);
+    const onDown = (): void => {
+      targetScale = PRESS_SCALE;
+      wake();
+    };
+    const onUp = (event: PointerEvent): void => {
+      const target = event.target as HTMLElement | null;
+      targetScale = target?.closest(INTERACTIVE) != null ? HOVER_SCALE : 1;
+      wake();
+    };
 
     window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
     document.addEventListener('pointerleave', onLeave);
     draw();
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onUp);
       document.removeEventListener('pointerleave', onLeave);
+      document.body.removeAttribute('data-custom-cursor');
     };
   }, [enabled]);
 
@@ -170,6 +226,16 @@ export const Cursor = () => {
           }}
         />
       ))}
+
+      {/* Ring last so it sits over the trail rather than under it. */}
+      <div
+        ref={ringRef}
+        className="absolute top-0 left-0 size-8 rounded-full border border-ink/25 will-change-transform"
+      />
+      <div
+        ref={headRef}
+        className="absolute top-0 left-0 size-[7px] rounded-full bg-accent will-change-transform"
+      />
     </div>
   );
 };

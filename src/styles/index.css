@@ -165,6 +165,16 @@
     color: #fff;
   }
 
+  /*
+   * Hide the native cursor only while the custom one is actually mounted. The
+   * component adds and removes this attribute, so touch, coarse-pointer and
+   * reduced-motion users never lose their pointer.
+   */
+  body[data-custom-cursor='on'],
+  body[data-custom-cursor='on'] * {
+    cursor: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
