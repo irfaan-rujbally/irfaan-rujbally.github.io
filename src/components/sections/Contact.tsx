@@ -1,5 +1,5 @@
 import { Mail, MessageCircle, Phone } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons';
+import { LinkedinIcon } from '@/components/ui/BrandIcons';
 import type { ComponentType, SVGProps } from 'react';
 import { profile } from '@/data/profile';
 import { Reveal } from '@/components/ui/Reveal';
@@ -49,17 +49,6 @@ const channels: Channel[] = [
     href: profile.linkedinUrl,
     external: true,
   },
-  ...(profile.githubUrl !== ''
-    ? [
-        {
-          icon: GithubIcon,
-          label: 'GitHub',
-          value: 'View repositories',
-          href: profile.githubUrl,
-          external: true,
-        } satisfies Channel,
-      ]
-    : []),
 ];
 
 export const Contact = () => (

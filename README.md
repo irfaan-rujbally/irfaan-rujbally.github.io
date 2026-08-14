@@ -17,7 +17,6 @@ by impact.
 | 2 | **Achievement bullets per role** — what you built and what it changed. The current bullets describe the scope of each job factually; nothing is invented, but nothing is impressive either. | `src/data/experience.ts` |
 | 3 | **Your CV as a PDF** at `public/Irfaan-Rujbally-CV.pdf` — the "Download CV" button links straight to it. | `public/` |
 | 4 | **GitHub profile URL.** Set `githubUrl` and the GitHub links appear automatically (they stay hidden while it's empty). | `src/data/profile.ts` |
-| 5 | **A Formspree form ID** so the contact form actually sends. See "Contact form" below. | `.env` |
 | 6 | **Years of experience per technology** — `yearsOfUse` is 0 everywhere, which the UI reads as "not confirmed" and hides the bar for. | `src/data/skills.ts` |
 | 7 | **Check your skills list is complete.** The Languages line on the CV was cut off after "Java" in the copy provided. | `src/data/skills.ts` |
 | 8 | **Resolve one CV inconsistency.** The CV summary says "freelance developer in Europe", but the experience table puts the 2022 freelance year in Mauritius/Remote and the only French role is the 2021 Lyon 1 assistantship. The About copy currently avoids the claim. | `src/data/profile.ts` |
@@ -120,20 +119,11 @@ A few things worth knowing before you change it:
 
 ## Contact form
 
-No backend — the form posts to [Formspree](https://formspree.io) (free tier: 50
-submissions/month).
+No backend is required. The form posts to [FormSubmit](https://formsubmit.co)
+and forwards submissions to the email address in `src/data/profile.ts`.
 
-1. Create a form there and copy the ID out of the endpoint URL
-   `https://formspree.io/f/<ID>`.
-2. Put it in `.env` as `VITE_FORMSPREE_ID`.
-3. **For deploys, also add it as a repository variable** — Settings → Secrets and
-   variables → Actions → Variables → `VITE_FORMSPREE_ID`. The CI runner builds
-   from a fresh checkout and `.env` is gitignored, so without this the deployed
-   form posts to `/f/undefined` and fails silently. (The ID is a public endpoint
-   identifier, not a secret — committing `.env` instead is also fine.)
-
-Without an ID the form still validates and shows a clear error pointing at the
-email address, rather than pretending to send.
+The first submission triggers an activation email to the recipient. Follow the
+confirmation link in that email to enable delivery of subsequent messages.
 
 ---
 

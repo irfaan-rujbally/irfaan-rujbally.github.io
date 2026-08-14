@@ -1,9 +1,11 @@
 import { MapPin, Mountain, Code2, Waves, Trophy } from 'lucide-react';
+import { motion } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
 import { profile } from '@/data/profile';
 import { SectionShell } from '@/components/layout/SectionShell';
 import { Reveal } from '@/components/ui/Reveal';
 import { asset } from '@/lib/cn';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const INTEREST_ICONS: Record<string, LucideIcon> = {
   Football: Trophy,
@@ -22,7 +24,10 @@ const FACTS: Array<{ label: string; value: string }> = [
   { label: 'Experience', value: 'Since 2015 — Mauritius & France' },
 ];
 
-export const About = () => (
+export const About = () => {
+  const reduced = usePrefersReducedMotion();
+
+  return (
   <SectionShell
     id="about"
     eyebrow="About"
@@ -30,7 +35,14 @@ export const About = () => (
   >
     <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
       <Reveal className="lg:col-span-5">
-        <div className="relative">
+        <motion.div
+          className="relative"
+          initial={reduced ? { opacity: 0 } : { opacity: 0, rotateY: -18, rotateZ: -2 }}
+          whileInView={{ opacity: 1, rotateY: 0, rotateZ: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: reduced ? 0.2 : 1.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformPerspective: 1200, transformOrigin: 'center center' }}
+        >
           <div
             aria-hidden="true"
             className="absolute -inset-4 -z-10 rounded-panel blur-2xl"
@@ -77,7 +89,7 @@ export const About = () => (
               {profile.location} · {profile.timezone}
             </span>
           </div>
-        </div>
+        </motion.div>
       </Reveal>
 
       <div className="lg:col-span-7">
@@ -121,4 +133,5 @@ export const About = () => (
       </div>
     </div>
   </SectionShell>
-);
+  );
+};

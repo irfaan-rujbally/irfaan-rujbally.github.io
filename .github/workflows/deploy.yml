@@ -33,9 +33,6 @@ jobs:
           # '/' for a <user>.github.io repo. For a project repo the site is served
           # from /<repo-name>/, so set BASE_PATH accordingly — see README.
           BASE_PATH: /
-          # Public Formspree endpoint ID, not a secret. Set it in
-          # Settings → Secrets and variables → Actions → Variables.
-          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
         run: npm run build
 
       - uses: actions/configure-pages@v5

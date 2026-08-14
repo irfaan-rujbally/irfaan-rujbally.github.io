@@ -34,7 +34,7 @@ const PROJECT_TYPES: Array<{ value: FormValues['projectType']; label: string }> 
   { value: 'other', label: 'Something else' },
 ];
 
-const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID ?? '';
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${profile.email}`;
 
 const fieldClass =
   'w-full rounded-xs border border-line bg-surface px-3.5 py-2.5 text-[0.9375rem] text-ink ' +
@@ -59,19 +59,11 @@ export const ContactForm = () => {
   const onSubmit = async (values: FormValues): Promise<void> => {
     if (values.company !== undefined && values.company !== '') return;
 
-    if (FORMSPREE_ID === '') {
-      setStatus('error');
-      setErrorMessage(
-        `The form isn't connected yet. Please email me directly at ${profile.email}.`,
-      );
-      return;
-    }
-
     setStatus('submitting');
     setErrorMessage('');
 
     try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -79,6 +71,8 @@ export const ContactForm = () => {
           email: values.email,
           projectType: values.projectType,
           message: values.message,
+          _subject: `Portfolio enquiry from ${values.name}`,
+          _template: 'table',
         }),
       });
 

@@ -1,5 +1,5 @@
 import { Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons';
+import { LinkedinIcon } from '@/components/ui/BrandIcons';
 import { profile } from '@/data/profile';
 
 export const Footer = () => {
@@ -32,20 +32,6 @@ export const Footer = () => {
                 <LinkedinIcon className="size-[17px]" />
               </a>
             </li>
-            {profile.githubUrl !== '' ? (
-              <li>
-                <a
-                  data-magnetic
-                  href={profile.githubUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="GitHub profile"
-                  className="grid size-9 place-items-center rounded-full text-ink-faint transition-colors hover:bg-surface-sunk hover:text-ink"
-                >
-                  <GithubIcon className="size-[17px]" />
-                </a>
-              </li>
-            ) : null}
             <li>
               <a
                 data-magnetic
