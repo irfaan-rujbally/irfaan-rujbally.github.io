@@ -3,11 +3,14 @@ import type { Degree } from '@/types';
 export const education: Degree[] = [
   {
     id: 'polytech',
-    title: "Master's Degree — MIAGE",
+    credential: "Master's Degree",
+    field: 'MIAGE',
     subtitle:
       'Applied Computer Science for Business Management, specialising in Information Systems in Healthcare',
     institution: 'Polytech Lyon',
     institutionUrl: 'https://polytech.univ-lyon1.fr/',
+    logo: 'logos/org/polytech.svg',
+    accent: '#2563eb',
     location: 'France',
     start: 'Sept 2018',
     end: 'Jun 2020',
@@ -16,9 +19,14 @@ export const education: Degree[] = [
   },
   {
     id: 'supinfo',
-    title: "Bachelor's Degree in Computer Science",
+    credential: "Bachelor's Degree",
+    field: 'Computer Science',
+    subtitle:
+      'Core computer science — algorithms and data structures, software engineering, systems, networks and databases',
     institution: 'SUPINFO Institute of Information Technology',
     institutionUrl: 'https://www.supinfo.com/',
+    logo: 'logos/org/supinfo.png',
+    accent: '#7c3aed',
     location: 'France',
     start: 'Sept 2016',
     end: 'Jul 2017',
@@ -27,9 +35,14 @@ export const education: Degree[] = [
   },
   {
     id: 'mcci',
-    title: 'BTS in IT Services for Organizations',
+    credential: 'BTS',
+    field: 'IT Services for Organizations',
+    subtitle:
+      'Brevet de Technicien Supérieur in Services Informatiques aux Organisations — building and supporting the systems businesses run on',
     institution: 'MCCI Business School',
     institutionUrl: 'https://www.mccibusinessschool.org/',
+    logo: 'logos/org/mcci.png',
+    accent: '#f97316',
     location: 'Mauritius',
     start: 'Sept 2014',
     end: 'Jun 2016',

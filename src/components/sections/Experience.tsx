@@ -14,6 +14,14 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
   const reduced = usePrefersReducedMotion();
   const isInternship = role.type === 'internship';
 
+  /* A tight hot arc rather than a slow fade: the colour is only near-full over
+     about a twelfth of the sweep, which reads as one travelling light instead
+     of two vague bright sides. Everything else sits at the normal border grey. */
+  const orbit = `conic-gradient(from var(--border-angle) at 50% 50%, ${role.accent} 0%, ${role.accent} 3%, var(--color-line) 16%, var(--color-line) 84%, ${role.accent} 97%, ${role.accent} 100%)`;
+  // Negative delay starts each card mid-cycle, so the eight lights drift apart
+  // instead of pulsing in lockstep down the page.
+  const orbitDelay = `${-index * 0.45}s`;
+
   return (
     <motion.li
       initial="hidden"
@@ -33,20 +41,34 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
         ) : null}
       </div>
 
-      <article
-        className={cn(
-          'group relative rounded-card border bg-surface transition-[transform,box-shadow,border-color,background-color,color,opacity] duration-200 ease-[var(--ease-standard)]',
-          'hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]',
-          role.current ? 'border-line' : 'border-line',
-          isInternship ? 'p-4 sm:p-5' : 'p-5 sm:p-6',
-        )}
-      >
-        {role.current ? (
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-4 -left-px w-[3px] rounded-full bg-accent"
-          />
-        ) : null}
+      <div className="group relative transition-transform duration-200 ease-[var(--ease-standard)] hover:-translate-y-1">
+        {/* The halo. Same gradient and phase as the ring, but oversized and
+            blurred, so the light bleeds past the card edge the way a real one
+            would. Dialled up in dark mode, where there's contrast to carry it. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-1 animate-border-orbit rounded-[calc(var(--radius-card)+0.25rem)] opacity-45 blur-[10px] dark:opacity-80"
+          style={{ background: orbit, animationDelay: orbitDelay }}
+        />
+
+        {/* The ring: the gradient paints the whole box and the opaque card below
+            covers all but the outer 2px. */}
+        <div
+          className="relative animate-border-orbit rounded-card p-[2px] transition-shadow duration-200 ease-[var(--ease-standard)] group-hover:shadow-[var(--shadow-lg)]"
+          style={{ background: orbit, animationDelay: orbitDelay }}
+        >
+          <article
+            className={cn(
+              'relative rounded-[calc(var(--radius-card)-2px)] bg-surface transition-[background-color,color,opacity] duration-200 ease-[var(--ease-standard)]',
+              isInternship ? 'p-4 sm:p-5' : 'p-5 sm:p-6',
+            )}
+          >
+          {role.current ? (
+            <span
+              aria-hidden="true"
+              className="absolute inset-y-4 left-0 w-[3px] rounded-full bg-accent"
+            />
+          ) : null}
         <span
           aria-hidden="true"
           className="absolute inset-x-5 top-0 h-px scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-300 group-hover:scale-x-100"
@@ -126,7 +148,9 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
             ))}
           </ul>
         ) : null}
-      </article>
+          </article>
+        </div>
+      </div>
     </motion.li>
   );
 };

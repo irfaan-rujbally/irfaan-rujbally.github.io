@@ -13,6 +13,7 @@ import type { Role } from '@/types';
 export const experience: Role[] = [
   {
     id: 'xefi',
+    accent: '#2563eb',
     title: 'Software Engineer',
     company: 'XEFI Mauritius',
     companyUrl: 'https://www.xefi.fr/',
@@ -33,6 +34,7 @@ export const experience: Role[] = [
   },
   {
     id: 'rtknits',
+    accent: '#06b6d4',
     title: 'Full Stack Engineer',
     company: 'RT Knits',
     companyUrl: 'https://rtknits.com/',
@@ -53,6 +55,7 @@ export const experience: Role[] = [
   },
   {
     id: 'freelance',
+    accent: '#10b981',
     title: 'Freelance Web Developer',
     company: 'Independent',
     companyBlurb:
@@ -71,6 +74,7 @@ export const experience: Role[] = [
   },
   {
     id: 'lyon1',
+    accent: '#f59e0b',
     title: 'Digital Engineering & Teaching Assistant',
     company: 'Université Claude Bernard Lyon 1',
     companyUrl: 'https://www.univ-lyon1.fr/',
@@ -90,6 +94,7 @@ export const experience: Role[] = [
   },
   {
     id: 'yulounge-php',
+    accent: '#f97316',
     title: 'PHP Developer',
     company: 'Yu Lounge Ltd',
     companyBlurb:
@@ -108,6 +113,7 @@ export const experience: Role[] = [
   },
   {
     id: 'yulounge-intern',
+    accent: '#ef4444',
     title: 'Developer',
     company: 'Yu Lounge Ltd',
     companyBlurb: 'Internship — academic support placement.',
@@ -122,6 +128,7 @@ export const experience: Role[] = [
   },
   {
     id: 'automaster',
+    accent: '#ec4899',
     title: 'Developer',
     company: 'Automaster Ltd',
     companyBlurb:
@@ -137,6 +144,7 @@ export const experience: Role[] = [
   },
   {
     id: 'bquad',
+    accent: '#8b5cf6',
     title: 'Web Developer',
     company: 'Bquad Interactive Ltd',
     companyUrl: 'https://www.bquad.mu/',

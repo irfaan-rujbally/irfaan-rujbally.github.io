@@ -22,6 +22,8 @@ export type Role = {
   company: string;
   companyUrl?: string;
   companyBlurb?: string;
+  /** Colour of the light that orbits this card's border. A CSS colour. */
+  accent: string;
   location: string;
   start: string;
   end: string;
@@ -35,10 +37,17 @@ export type Role = {
 
 export type Degree = {
   id: string;
-  title: string;
+  /** The award itself — "Master's Degree", "BTS". Rendered as the card's kicker. */
+  credential: string;
+  /** What it was in — "MIAGE", "Computer Science". Rendered as the card's headline. */
+  field: string;
   subtitle?: string;
   institution: string;
   institutionUrl?: string;
+  /** Path under public/logos/org/. Falls back to an <OrgMark> monogram when absent. */
+  logo?: string;
+  /** Institution's brand colour, as a CSS colour. Tints the card at low opacity. */
+  accent: string;
   location: string;
   start: string;
   end: string;

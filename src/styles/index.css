@@ -82,6 +82,57 @@
   /* ---- Motion ------------------------------------------------------------ */
   --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Coin-spin for the education logo discs. Loops for as long as the pointer
+     is on the disc; the reduced-motion block below pins it to a single frame. */
+  --animate-disc-flip: disc-flip 1.8s linear infinite;
+  --animate-disc-flip-face: disc-flip-face 1.8s linear infinite;
+
+  /* Light travelling around a card's border. Spinning the gradient's own angle
+     keeps the painted area the size of the card — the usual trick, an
+     oversized rotating element, would mean a ~3000px layer per role card. */
+  --animate-border-orbit: border-orbit 4s linear infinite;
+
+  @keyframes border-orbit {
+    to {
+      --border-angle: 360deg;
+    }
+  }
+
+  @keyframes disc-flip {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  /* Counter-mirrors the logo across the back half of the spin, so the wordmark
+     stays readable instead of showing reversed for 900ms. Same duration and
+     easing as disc-flip, so the two stay in phase. */
+  @keyframes disc-flip-face {
+    0%,
+    24.99% {
+      transform: scaleX(1);
+    }
+    25%,
+    74.99% {
+      transform: scaleX(-1);
+    }
+    75%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Registered so it can be interpolated — a plain custom property would jump
+   from 0deg to 360deg instead of sweeping. */
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
 }
 
 /* ---- Dark palette -------------------------------------------------------- */

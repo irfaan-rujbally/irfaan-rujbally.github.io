@@ -28,10 +28,11 @@ type OrgMarkProps = {
 /**
  * A deliberate monogram, not a broken-image fallback.
  *
- * Real company logos are copyrighted trademarks and could not be bundled here.
- * To use them instead: drop files in public/logos/org/<id>.svg and render an
- * <img> in place of this component. Keep them ≤32px, always beside the
- * organisation's name, and keep the footer trademark note.
+ * Real company logos are copyrighted trademarks, so only the ones deliberately
+ * placed in public/logos/org/ are used. To show one, prefer <OrgLogo>, which
+ * renders the file when it exists and falls back to this monogram when it does
+ * not. Keep logos ≤40px, always beside the organisation's name, and keep the
+ * footer trademark note.
  */
 export const OrgMark = ({ name, size = 32, className }: OrgMarkProps) => {
   const { initials, hue } = useMemo(

@@ -161,12 +161,14 @@ DNS record at `<username>.github.io`, and set `BASE_PATH` back to `/`.
 
 ## Notes
 
-- **Company and school logos are not bundled.** They're copyrighted trademarks
-  and the sources weren't reachable at build time, so the site uses a designed
-  monogram (initials on a tinted rounded square) instead. To use real logos: put
-  them in `public/logos/org/` and render an `<img>` in place of `<OrgMark>`. Keep
-  them ≤32px, always beside the organisation's name, never in the hero or nav,
-  and keep the trademark line in the footer.
+- **Company and school logos are opt-in per organisation.** They're copyrighted
+  trademarks, so only the ones actually placed in `public/logos/org/` are used.
+  Education cards render `<OrgLogo>`, which falls back to the `<OrgMark>`
+  monogram (initials on a tinted rounded square) whenever the file is missing —
+  so adding a logo is a drop-in with no code change. Point `logo` in
+  `src/data/education.ts` at the file. Experience still uses `<OrgMark>`
+  directly. Keep logos ≤40px, always beside the organisation's name, never in
+  the hero or nav, and keep the trademark line in the footer.
 - **Fonts are self-hosted** via `@fontsource-variable` (Geist, Geist Mono, Inter)
   — no Google Fonts round trip, no privacy footnote.
 - **One console warning in dev:** `THREE.Clock: This module has been deprecated`.
