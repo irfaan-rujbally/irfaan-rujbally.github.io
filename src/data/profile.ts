@@ -16,9 +16,9 @@ export const profile = {
   timezone: 'GMT+4',
 
   email: 'irfaan.rujbally@gmail.com',
-  phone: '+230 5713 1848',
-  phoneHref: 'tel:+23057131848',
-  whatsappUrl: 'https://wa.me/23057131848',
+  phone: '+230 5707 9335',
+  phoneHref: 'tel:+23057079335',
+  whatsappUrl: 'https://wa.me/23057079335',
   linkedinUrl: 'https://www.linkedin.com/in/irfaan-r-6a7a39152',
   /**
    * Widened for the same reason as portraitSrc: the object is `as const`, so a
