@@ -16,6 +16,15 @@ const LINKS: Array<{ id: SectionId; label: string }> = [
   { id: 'projects', label: 'Projects' },
 ];
 
+const MENU_LINKS: Array<{ id: SectionId; label: string }> = [
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'education', label: 'Education' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact' },
+];
+
 type NavProps = { active: SectionId };
 
 export const Nav = ({ active }: NavProps) => {
@@ -163,7 +172,7 @@ export const Nav = ({ active }: NavProps) => {
             </div>
 
             <ul className="shell mt-8 flex flex-col gap-1">
-              {[...LINKS, { id: 'contact' as SectionId, label: 'Contact' }].map(
+              {MENU_LINKS.map(
                 (link, index) => (
                   <motion.li
                     key={link.id}

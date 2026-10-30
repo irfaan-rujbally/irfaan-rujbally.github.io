@@ -30,9 +30,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </span>
         ) : null}
 
-        <div className="relative overflow-hidden bg-surface-sunk">
-          <div className={cn('relative w-full', wide ? 'aspect-[2/1]' : 'aspect-[16/10]')}>
-            {project.image !== undefined ? (
+        {project.image !== undefined ? (
+          <div className="relative overflow-hidden bg-surface-sunk">
+            <div className={cn('relative w-full', wide ? 'aspect-[2/1]' : 'aspect-[16/10]')}>
               <img
                 src={asset(project.image)}
                 alt=""
@@ -40,38 +40,23 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 decoding="async"
                 className="size-full object-cover transition-transform duration-600 ease-[var(--ease-expo)] group-hover:scale-[1.04]"
               />
-            ) : (
-              <div
-                className="grid size-full place-items-center"
-                style={{
-                  backgroundImage:
-                    'radial-gradient(circle, color-mix(in srgb, var(--color-ink) 16%, transparent) 1px, transparent 1px)',
-                  backgroundSize: '20px 20px',
-                }}
-              >
-                <FolderOpen
-                  className="size-8 text-ink-ghost"
-                  strokeWidth={1.4}
-                  aria-hidden="true"
-                />
-              </div>
-            )}
 
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 bg-gradient-to-t from-ink/70 to-transparent p-3 pt-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            >
-              {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-full bg-white/90 px-2 py-0.5 font-mono text-[0.625rem] font-medium text-ink"
-                >
-                  {tech}
-                </span>
-              ))}
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 bg-gradient-to-t from-ink/70 to-transparent p-3 pt-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              >
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full bg-white/90 px-2 py-0.5 font-mono text-[0.625rem] font-medium text-ink"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
 
         <div className="flex flex-1 flex-col p-5">
           <h3 className="text-h3 text-ink">{project.title}</h3>
@@ -156,9 +141,11 @@ export const Projects = () => {
   const [filter, setFilter] = useState<string>('all');
 
   const techOptions = useMemo(() => {
-    const set = new Set<string>();
-    visibleProjects.forEach((project) => project.tech.forEach((t) => set.add(t)));
-    return [...set].sort();
+    const counts = new Map<string, number>();
+    visibleProjects.forEach((project) =>
+      project.tech.forEach((t) => counts.set(t, (counts.get(t) ?? 0) + 1)),
+    );
+    return [...counts].filter(([, count]) => count > 1).map(([t]) => t).sort();
   }, []);
 
   const filtered = useMemo(

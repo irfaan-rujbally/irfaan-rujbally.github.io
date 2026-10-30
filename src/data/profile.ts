@@ -29,9 +29,9 @@ export const profile = {
 
   /**
    * Pre-cropped to the 4:5 the About slot expects, anchored on the face rather
-   * than the geometric centre — object-cover would otherwise crop the 4:3
-   * original blind. 869x1086 against a slot that renders 443px wide at every
-   * breakpoint, so it lands at ~2x: retina-sharp without shipping dead pixels.
+   * than the geometric centre — object-cover would otherwise crop the 3:4
+   * original blind. 640x800 against a slot that renders 443px wide at every
+   * breakpoint, so it lands at ~1.4x.
    *
    * Widened to `string` because the object is `as const`: without it the value
    * narrows to its own literal, and About's `!== ''` placeholder check becomes
@@ -47,12 +47,13 @@ export const profile = {
   roles: [
     'Software Engineer',
     'Full-Stack Developer',
-    'Laravel & Vue Specialist',
+    'Laravel & React Specialist',
+    'AI-Assisted Developer',
     'Mobile App Developer',
   ],
 
   heroLine:
-    'I design and build scalable web applications — clean architecture, maintainable code, and interfaces people actually enjoy using. Ten years across Mauritius and France, from Laravel back-ends to mobile apps.',
+    'I design and build scalable web applications — clean architecture, maintainable code, and interfaces people actually enjoy using. Ten years across Mauritius and France, from Laravel back-ends and React front ends to mobile apps.',
 
   /**
    * Rewritten from the CV summary, angled at clients rather than recruiters.
@@ -64,7 +65,7 @@ export const profile = {
    */
   about: [
     "I'm a software engineer based in Phoenix, Mauritius. I build web applications that hold up — the kind where the architecture still makes sense two years and three feature requests later.",
-    "My route here ran through France: a BTS in Mauritius, then a Computer Science degree at SUPINFO and a Master's in MIAGE at Polytech Lyon, followed by a year of digital engineering and teaching at Université Claude Bernard Lyon 1. I came home in 2022 and have been building for Mauritian companies since — most recently at RT Knits and now at XEFI.",
+    "My route here ran through France: a BTS in Mauritius, then a Computer Science degree at SUPINFO and a Master's in MIAGE at Polytech Lyon, followed by a year of digital engineering and teaching at Université Claude Bernard Lyon 1. I came home in 2022 and have been building for Mauritian companies since — most recently at RT Knits and now at XEFI, where I build Laravel and React applications and set up AI environments that automate software development and team management.",
     "What that adds up to: European engineering standards, Mauritian availability, and someone who works comfortably in English and French. If you have a product to build, I'd like to hear about it.",
   ],
 
@@ -87,7 +88,7 @@ export const seo = {
   siteName: 'Irfaan Rujbally',
   title: 'Irfaan Rujbally — Software Engineer | Web & Mobile Apps, Mauritius',
   description:
-    'Software engineer in Mauritius building scalable web and mobile applications. Laravel, Vue, C# and React Native. Trained in France, available for projects worldwide.',
+    'Software engineer in Mauritius building scalable web and mobile applications. Laravel, React, TypeScript, Vue, C# and React Native. Trained in France, available for projects worldwide.',
   /** TODO: set to the final deployed URL before going live. */
   url: 'https://irfaan-rujbally.github.io/',
   ogImage: 'og-image.png',

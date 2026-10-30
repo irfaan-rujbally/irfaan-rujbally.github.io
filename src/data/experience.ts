@@ -3,12 +3,10 @@ import type { Role } from '@/types';
 /**
  * Roles, titles, employers, locations and dates are taken verbatim from Irfaan's CV.
  *
- * ⚠️ TODO: confirm with Irfaan.
- * The CV lists no achievement bullets, so `highlights` below describe the scope of
- * each role in factual, generic terms and every entry is marked
- * `highlightsUnconfirmed: true`. Nothing here claims a metric or an outcome that
- * has not been verified. Replace them with real "built X, which did Y" statements
- * and flip the flag to false — that is the single highest-impact edit on this site.
+ * XEFI's highlights are confirmed achievements. ⚠️ TODO: every other entry still
+ * describes the scope of the role in generic terms and is marked
+ * `highlightsUnconfirmed: true`. Replace them with real "built X, which did Y"
+ * statements and flip the flag to false.
  */
 export const experience: Role[] = [
   {
@@ -26,11 +24,12 @@ export const experience: Role[] = [
     type: 'full-time',
     current: true,
     highlights: [
-      'Building and maintaining internal business applications for the group.',
-      'Working across the stack on CRM and digitalisation tooling.',
-      'Collaborating with distributed teams between Mauritius and France.',
+      'Set up AI development environments with Claude Code to automate software delivery — from spec and planning through implementation, testing and code review.',
+      'Use AI agents for team management: shared task tracking, automated progress reporting and coordinated cross-review between developers.',
+      'Built several applications as Laravel REST APIs with React front ends, using Laravel REST API and the OSDD modular architecture.',
+      "Review teammates' merge requests and keep quality gates — automated tests, static analysis and linting — running on every change.",
     ],
-    highlightsUnconfirmed: true,
+    highlightsUnconfirmed: false,
   },
   {
     id: 'rtknits',

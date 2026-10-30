@@ -34,6 +34,7 @@ const s = (
 export const skills: Skill[] = [
   // ---- Languages ----------------------------------------------------------
   s('php', 'PHP', 'language', true, 'Primary back-end language since 2015.'),
+  s('typescript', 'TypeScript', 'language', true, 'Typed React front ends at XEFI.'),
   s('javascript', 'JavaScript', 'language', true, 'Front-end work across every project.'),
   s('vuejs', 'Vue.js', 'language', true, 'Component-driven interfaces.'),
   s('csharp', 'C#', 'language', true, '.NET application development.'),
@@ -43,9 +44,12 @@ export const skills: Skill[] = [
   s('jquery', 'jQuery', 'language', false, 'Legacy and maintenance front-ends.'),
   s('dotnetcore', 'ASP.NET', 'language', false, 'Server-side .NET applications.'),
   s('ajax', 'Ajax', 'language', false, 'Asynchronous request patterns.'),
+  s('bash', 'Bash', 'language', false, 'Scripting and automation under WSL.'),
+  s('powershell', 'PowerShell', 'language', false, 'Windows-side automation and legacy data exports.'),
 
   // ---- Frameworks ---------------------------------------------------------
-  s('laravel', 'Laravel', 'framework', true, 'Main PHP framework — APIs and full applications.'),
+  s('laravel', 'Laravel', 'framework', true, 'Main PHP framework — APIs, import commands, tested with PHPUnit and PHPStan.'),
+  s('react', 'React', 'framework', true, 'Front ends for Laravel REST APIs, with Next.js, TanStack Query and Vitest.'),
   s('symfony', 'Symfony', 'framework', true, 'Enterprise PHP applications.'),
   s('reactnative', 'React Native', 'framework', true, 'Cross-platform mobile applications.'),
   s('bootstrap', 'Bootstrap', 'framework', false, 'Rapid responsive UI delivery.'),
@@ -54,9 +58,13 @@ export const skills: Skill[] = [
   s('mysql', 'MySQL', 'database', true, 'Schema design and query optimisation.'),
   s('sql', 'SQL', 'database', false, 'Relational modelling and reporting queries.'),
   s('oracle', 'Oracle', 'database', false, 'Enterprise database work.'),
+  s('sqlite', 'SQLite', 'database', false, 'Fast, isolated test databases.'),
 
   // ---- Tools --------------------------------------------------------------
   s('git', 'Git', 'tool', true, 'Version control on every project.'),
+  s('docker', 'Docker', 'tool', true, 'Containerised local and CI environments.'),
+  s('gitlab', 'GitLab CI', 'tool', false, 'Pipelines running tests and linting on every change.'),
+  s('playwright', 'Playwright', 'tool', false, 'End-to-end tests that walk through every screen.'),
   s('composer', 'Composer', 'tool', false, 'PHP dependency management.'),
   s('npm', 'NPM', 'tool', false, 'JavaScript tooling and package management.'),
   s('visualstudio', 'Visual Studio', 'tool', false, 'Primary .NET IDE.'),

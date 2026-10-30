@@ -17,7 +17,7 @@ export default defineConfig({
   },
   build: {
     target: 'es2022',
-    cssTarget: 'chrome111',
+    cssTarget: ['chrome111', 'safari16.4', 'firefox128'],
     chunkSizeWarningLimit: 900,
   },
 });
