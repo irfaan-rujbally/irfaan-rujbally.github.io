@@ -39,6 +39,8 @@ export const profile = {
    * comes back, which is the point.
    */
   portraitSrc: 'img/irfaan-portrait.webp' as string,
+  /** Shown instead of portraitSrc while Star Wars mode is on. */
+  starWarsPortraitSrc: 'img/irfaan-portrait-starwars.webp',
 
   cvPath: 'Irfaan-Rujbally-CV.pdf',
 

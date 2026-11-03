@@ -176,7 +176,10 @@ export const Cursor = () => {
       pointer.y = event.clientY;
 
       const target = event.target as HTMLElement | null;
-      targetScale = target?.closest(INTERACTIVE) != null ? HOVER_SCALE : 1;
+      targetScale =
+        target?.closest(INTERACTIVE) != null || document.body.dataset.shipHover === 'on'
+          ? HOVER_SCALE
+          : 1;
 
       setVisible(true);
       wake();

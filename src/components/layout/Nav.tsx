@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from 'motion/react';
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Rocket, Sun, X } from 'lucide-react';
 import { profile } from '@/data/profile';
 import { scrollToSection } from '@/hooks/useLenis';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -119,10 +119,16 @@ export const Nav = ({ active }: NavProps) => {
               type="button"
               data-magnetic
               onClick={toggle}
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+              aria-label={
+                theme === 'starwars'
+                  ? 'Leave Star Wars mode'
+                  : `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`
+              }
               className="grid size-9 place-items-center rounded-full text-ink-faint transition-colors duration-200 hover:bg-surface-sunk hover:text-ink"
             >
-              {theme === 'dark' ? (
+              {theme === 'starwars' ? (
+                <Rocket className="size-[18px]" strokeWidth={1.8} />
+              ) : theme === 'dark' ? (
                 <Sun className="size-[18px]" strokeWidth={1.8} />
               ) : (
                 <Moon className="size-[18px]" strokeWidth={1.8} />

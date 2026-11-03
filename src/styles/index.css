@@ -158,6 +158,34 @@
     0 24px 48px -12px rgb(0 0 0 / 0.6), 0 8px 16px -8px rgb(0 0 0 / 0.4);
 }
 
+.starwars {
+  --color-canvas: #000000;
+  --color-surface: #0c0c12;
+  --color-surface-sunk: #16161e;
+  --color-ink: #f4f1e6;
+  --color-ink-soft: #bdb9ac;
+  --color-ink-faint: #8f8b80;
+  --color-ink-ghost: #57544c;
+  --color-line: #2b2a25;
+  --color-accent: #ffe81f;
+  --color-accent-soft: #3b3408;
+  --color-accent-deep: #fff38a;
+  --color-mint: #ff9d1c;
+  --color-danger: #ff6b6b;
+  --color-live: #4ade80;
+}
+
+/* Unlayered so it beats the text-ink utility on the big headings. */
+.starwars h1,
+.starwars h2 {
+  color: var(--color-accent);
+}
+
+/* The flying ship is behind the content, so the page owns the pointer cue. */
+body[data-ship-hover='on'] {
+  cursor: pointer;
+}
+
 @layer base {
   *,
   *::before,

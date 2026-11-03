@@ -45,11 +45,15 @@
           var stored = localStorage.getItem('ir-theme');
           var dark =
             stored === 'dark' ||
+            stored === 'starwars' ||
             (stored === null &&
               window.matchMedia('(prefers-color-scheme: dark)').matches);
           if (dark) {
             document.documentElement.classList.add('dark');
             document.documentElement.style.colorScheme = 'dark';
+          }
+          if (stored === 'starwars') {
+            document.documentElement.classList.add('starwars');
           }
         } catch (e) {}
       })();

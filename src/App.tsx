@@ -1,11 +1,14 @@
 import { useLenis } from '@/hooks/useLenis';
 import { useActiveSection } from '@/hooks/useActiveSection';
+import { useTheme } from '@/hooks/useTheme';
 import { Nav } from '@/components/layout/Nav';
 import { SectionIndex } from '@/components/layout/SectionIndex';
 import { Footer } from '@/components/layout/Footer';
 import { AtomField } from '@/components/fx/AtomField';
 import { Cursor } from '@/components/fx/Cursor';
 import { NoiseOverlay } from '@/components/fx/NoiseOverlay';
+import { SpaceField } from '@/components/fx/SpaceField';
+import { SpaceshipFlyby } from '@/components/fx/SpaceshipFlyby';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Skills } from '@/components/sections/Skills';
@@ -28,6 +31,7 @@ const SECTIONS: readonly SectionId[] = [
 export const App = () => {
   useLenis();
   const active = useActiveSection(SECTIONS);
+  const { theme } = useTheme();
 
   return (
     <>
@@ -38,7 +42,8 @@ export const App = () => {
         Skip to content
       </a>
 
-      <AtomField />
+      {theme === 'starwars' ? <SpaceField /> : <AtomField />}
+      <SpaceshipFlyby />
       <Cursor />
       <NoiseOverlay />
       <Nav active={active} />

@@ -49,6 +49,27 @@ export const Footer = () => {
           All company and institution names and marks are the property of their
           respective owners and appear here for identification purposes only.
         </p>
+        <p className="mt-2 text-center text-[0.6875rem] leading-relaxed text-ink-ghost md:text-left">
+          “
+          <a
+            href="https://sketchfab.com/3d-models/millennium-falcon-d7f48553ff084205853334300aeaa9c6"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline-offset-2 hover:underline"
+          >
+            Millennium Falcon
+          </a>
+          ” by Green Squadron, licensed under{' '}
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline-offset-2 hover:underline"
+          >
+            CC BY 4.0
+          </a>
+          , compressed for the web.
+        </p>
       </div>
     </footer>
   );

@@ -6,6 +6,7 @@ import { SectionShell } from '@/components/layout/SectionShell';
 import { Reveal } from '@/components/ui/Reveal';
 import { asset } from '@/lib/cn';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useTheme } from '@/hooks/useTheme';
 
 const INTEREST_ICONS: Record<string, LucideIcon> = {
   Football: Trophy,
@@ -26,6 +27,7 @@ const FACTS: Array<{ label: string; value: string }> = [
 
 export const About = () => {
   const reduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
 
   return (
   <SectionShell
@@ -54,7 +56,9 @@ export const About = () => {
 
           {profile.portraitSrc !== '' ? (
             <img
-              src={asset(profile.portraitSrc)}
+              src={asset(
+                theme === 'starwars' ? profile.starWarsPortraitSrc : profile.portraitSrc,
+              )}
               alt={`${profile.name}, software engineer`}
               width={640}
               height={800}
