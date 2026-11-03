@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Billboard, useTexture } from '@react-three/drei';
 import {
@@ -115,6 +115,13 @@ export const GlobeScene = ({
   const ndc = useMemo(() => new Vector2(), []);
   const camera = useThree((state) => state.camera);
   const hoverRef = useRef<string | null>(null);
+
+  /* The frame loop stops while paused, so it can't clear a hover itself. */
+  useEffect(() => {
+    if (!paused || hoverRef.current === null) return;
+    hoverRef.current = null;
+    onHover(null);
+  }, [paused, onHover]);
 
   useFrame((_state, delta) => {
     if (paused) return;

@@ -110,6 +110,15 @@ export const GlobeCanvas = ({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClear]);
 
+  /* Alt-tab or a screenshot overlay takes the pointer without a pointerleave. */
+  useEffect(() => {
+    const onBlur = (): void => {
+      pointerRef.current = null;
+    };
+    window.addEventListener('blur', onBlur);
+    return () => window.removeEventListener('blur', onBlur);
+  }, []);
+
   return (
     <div
       ref={wrapRef}
