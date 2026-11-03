@@ -12,11 +12,15 @@ import { asset } from '@/lib/cn';
 
 const ORBITS = [
   { size: 100, duration: 34, ids: ['laravel', 'vuejs'] },
-  { size: 74, duration: 26, ids: ['php', 'csharp', 'mysql'] },
+  { size: 74, duration: 26, ids: ['php', 'ai', 'mysql'] },
   { size: 46, duration: 20, ids: ['reactnative'] },
 ] as const;
 
-const byId = (id: string) => skills.find((skill) => skill.id === id);
+/* Marks that aren't a skill on the sphere. */
+const EXTRA_ICONS: Record<string, string> = { ai: 'logos/tech/ai.svg' };
+
+const iconFor = (id: string): string | undefined =>
+  EXTRA_ICONS[id] ?? skills.find((skill) => skill.id === id)?.icon;
 
 export const HeroOrbit = () => {
   const reduced = usePrefersReducedMotion();
@@ -64,8 +68,8 @@ export const HeroOrbit = () => {
             }}
           >
             {orbit.ids.map((id, index) => {
-              const skill = byId(id);
-              if (skill === undefined) return null;
+              const icon = iconFor(id);
+              if (icon === undefined) return null;
               const angle = (360 / orbit.ids.length) * index + orbitIndex * 28;
 
               return (
@@ -91,7 +95,7 @@ export const HeroOrbit = () => {
                     }}
                   >
                     <img
-                      src={asset(skill.icon)}
+                      src={asset(icon)}
                       alt=""
                       width={22}
                       height={22}
