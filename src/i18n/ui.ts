@@ -1,0 +1,326 @@
+import type { Locale } from './localeStore';
+
+/*
+ * Interface copy: labels, headings, buttons and messages. Content about Irfaan
+ * (bio, roles, degrees, projects) stays in src/data, written as { en, fr } pairs.
+ * `fr` is typed against `en`, so a missing translation fails the build.
+ */
+const en = {
+  meta: {
+    title: 'Irfaan Rujbally — AI Software Engineer | Web & Mobile Apps, Mauritius',
+    description:
+      'Software engineer in Mauritius building scalable web and mobile applications. Laravel, React, TypeScript, Vue, C# and React Native. Trained in France, available for projects worldwide.',
+  },
+  sections: {
+    hero: 'Top',
+    about: 'About',
+    skills: 'Skills',
+    experience: 'Experience',
+    education: 'Education',
+    projects: 'Projects',
+    contact: 'Contact',
+  },
+  nav: {
+    primary: 'Primary',
+    sectionIndex: 'Section navigation',
+    goTo: (label: string) => `Go to ${label}`,
+    backToTop: (name: string) => `${name} — back to top`,
+    letsTalk: 'Let’s talk',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    toLight: 'Switch to light theme',
+    toDark: 'Switch to dark theme',
+    leaveStarWars: 'Leave Star Wars mode',
+    switchLanguage: 'Passer le site en français',
+    otherLanguage: 'FR',
+  },
+  hero: {
+    region: 'Mauritius',
+    iAmA: 'I’m a',
+    seeWork: 'See my work',
+    downloadCv: 'Download CV',
+    scrollToAbout: 'Scroll to About',
+  },
+  about: {
+    eyebrow: 'About',
+    heading: 'Ten years of building things that have to keep working.',
+    portraitAlt: (name: string) => `${name}, software engineer`,
+    portraitPending: 'Portrait pending',
+    portraitPendingHint: 'Add a photo to public/img/ and set portraitSrc.',
+    basedIn: 'Based in',
+    languages: 'Languages',
+    education: 'Education',
+    educationValue: 'MSc MIAGE — Polytech Lyon, France',
+    experience: 'Experience',
+    experienceValue: 'Since 2015 — Mauritius & France',
+    outsideWork: 'Outside work',
+  },
+  skills: {
+    eyebrow: 'Skills',
+    heading: 'The stack I work in.',
+    intro: 'Drag the sphere to explore. Click a logo to pin it and see where I’ve used it.',
+    dragHint: 'Drag the sphere. Click a logo to pin it.',
+    selectHint: 'Select a technology to see the detail.',
+    viewGrid: 'View as grid',
+    viewGlobe: 'View as 3D globe',
+    filter: 'Filter',
+    summary: (count: number) =>
+      `${count} technologies across languages, frameworks, databases and tooling — the working set from ten years of shipping.`,
+    fullList: 'Full list of technologies',
+    globeLabel: (count: number) =>
+      `An interactive sphere of ${count} technology logos. Drag to rotate. The full list is also available as text below.`,
+    emptyDetail: 'Hover or select a technology to see where I’ve used it.',
+    pinned: 'Pinned',
+    experience: 'Experience',
+    years: (n: number) => `${n} yr${n === 1 ? '' : 's'}`,
+    categories: {
+      all: 'All',
+      language: 'Languages',
+      framework: 'Frameworks',
+      database: 'Databases',
+      tool: 'Tools',
+    },
+  },
+  experience: {
+    eyebrow: 'Experience',
+    heading: 'Where I’ve worked.',
+    intro:
+      'Nine roles across Mauritius and France — manufacturing, IT services, aviation hospitality, higher education and agency work.',
+    current: 'Current',
+    internship: 'Internship',
+    present: 'Present',
+  },
+  education: {
+    eyebrow: 'Education',
+    heading: 'Trained in Mauritius and France.',
+  },
+  projects: {
+    eyebrow: 'Selected work',
+    heading: 'Things I’ve built.',
+    intro: 'Applications that went into daily use — the problem, the approach, and what changed.',
+    sample: 'Sample — replace',
+    live: 'Live',
+    code: 'Code',
+    all: 'All',
+    emptyTitle: 'Case studies coming soon',
+    emptyBody:
+      'I’m writing up recent work. In the meantime, I’m happy to walk through what I’ve built and how — just get in touch.',
+    emptyCta: 'Ask me about my work',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    heading: 'Have a project in mind?',
+    intro:
+      'Tell me what you’re building and I’ll tell you honestly whether I’m the right person for it — and roughly what it takes.',
+    email: 'Email',
+    phone: 'Phone',
+    whatsappValue: 'Message me directly',
+    basedIn: (location: string, timezone: string) =>
+      `Based in ${location} (${timezone}). I work with clients in Europe, Africa and Asia — happy to fit your hours.`,
+    copy: (label: string) => `Copy ${label}`,
+    copied: (label: string) => `${label} copied`,
+    copiedStatus: (label: string) => `${label} copied to clipboard`,
+  },
+  form: {
+    name: 'Name',
+    namePlaceholder: 'Jane Doe',
+    email: 'Email',
+    emailPlaceholder: 'jane@company.com',
+    projectType: 'Project type',
+    types: {
+      'web-app': 'Web application',
+      'mobile-app': 'Mobile application',
+      'api-backend': 'API & back-end',
+      other: 'Something else',
+    },
+    message: 'What are you building?',
+    messagePlaceholder: 'A few lines about the project, the timeline, and what success looks like.',
+    honeypot: 'Company (leave blank)',
+    errors: {
+      name: 'Please enter your name.',
+      email: 'Please enter a valid email address.',
+      messageShort: 'A little more detail helps — 20 characters minimum.',
+      messageLong: 'That is longer than the form accepts. Please email me directly.',
+      send: (email: string) => `Something went wrong sending that. Please email me directly at ${email}.`,
+    },
+    sending: 'Sending…',
+    send: 'Send message',
+    sentTitle: 'Message sent',
+    sentBody: 'Thanks — I’ll get back to you within a day or two.',
+    sendAnother: 'Send another',
+  },
+  footer: {
+    builtWith: 'Built with React · Three.js · Tailwind',
+    linkedin: 'LinkedIn profile',
+    email: (name: string) => `Email ${name}`,
+    marks:
+      'All company and institution names and marks are the property of their respective owners and appear here for identification purposes only.',
+    quoteOpen: '“',
+    quoteClose: '”',
+    modelBy: 'by Green Squadron, licensed under',
+    modelNote: ', compressed for the web.',
+  },
+};
+
+export type UiStrings = typeof en;
+
+const fr: UiStrings = {
+  meta: {
+    title: 'Irfaan Rujbally — Concepteur d’application IA | Applications web et mobiles, Maurice',
+    description:
+      'Ingénieur logiciel basé à Maurice, je conçois des applications web et mobiles évolutives avec Laravel, React, TypeScript, Vue, C# et React Native. Formé en France, disponible pour des projets dans le monde entier.',
+  },
+  sections: {
+    hero: 'Haut de page',
+    about: 'À propos',
+    skills: 'Compétences',
+    experience: 'Expérience',
+    education: 'Formation',
+    projects: 'Projets',
+    contact: 'Contact',
+  },
+  nav: {
+    primary: 'Navigation principale',
+    sectionIndex: 'Navigation entre les sections',
+    goTo: (label) => `Aller à la section « ${label} »`,
+    backToTop: (name) => `${name} — retour en haut de page`,
+    letsTalk: 'Discutons',
+    openMenu: 'Ouvrir le menu',
+    closeMenu: 'Fermer le menu',
+    toLight: 'Passer au thème clair',
+    toDark: 'Passer au thème sombre',
+    leaveStarWars: 'Quitter le mode Star Wars',
+    switchLanguage: 'Switch the site to English',
+    otherLanguage: 'EN',
+  },
+  hero: {
+    region: 'Maurice',
+    iAmA: 'Je suis',
+    seeWork: 'Voir mes réalisations',
+    downloadCv: 'Télécharger mon CV',
+    scrollToAbout: 'Aller à la section « À propos »',
+  },
+  about: {
+    eyebrow: 'À propos',
+    heading: 'Dix ans à concevoir des logiciels faits pour durer.',
+    portraitAlt: (name) => `${name}, concepteur d’application IA`,
+    portraitPending: 'Portrait à venir',
+    portraitPendingHint: 'Ajoutez une photo dans public/img/ et renseignez portraitSrc.',
+    basedIn: 'Basé à',
+    languages: 'Langues',
+    education: 'Formation',
+    educationValue: 'Master MIAGE — Polytech Lyon, France',
+    experience: 'Expérience',
+    experienceValue: 'Depuis 2015, à Maurice et en France',
+    outsideWork: 'Centres d’intérêt',
+  },
+  skills: {
+    eyebrow: 'Compétences',
+    heading: 'Les technologies que j’utilise.',
+    intro:
+      'Faites tourner la sphère pour l’explorer. Cliquez sur un logo pour l’épingler et découvrir où j’ai utilisé cette technologie.',
+    dragHint: 'Faites tourner la sphère. Cliquez sur un logo pour l’épingler.',
+    selectHint: 'Sélectionnez une technologie pour en voir le détail.',
+    viewGrid: 'Afficher en grille',
+    viewGlobe: 'Afficher en globe 3D',
+    filter: 'Filtrer',
+    summary: (count) =>
+      `${count} technologies entre langages, frameworks, bases de données et outils : l’essentiel de dix ans de projets livrés.`,
+    fullList: 'Liste complète des technologies',
+    globeLabel: (count) =>
+      `Sphère interactive présentant ${count} logos de technologies. Faites-la glisser pour la faire tourner. La liste complète figure aussi sous forme de texte ci-dessous.`,
+    emptyDetail: 'Survolez ou sélectionnez une technologie pour voir où je l’ai utilisée.',
+    pinned: 'Épinglée',
+    experience: 'Expérience',
+    years: (n) => `${n} an${n === 1 ? '' : 's'}`,
+    categories: {
+      all: 'Toutes',
+      language: 'Langages',
+      framework: 'Frameworks',
+      database: 'Bases de données',
+      tool: 'Outils',
+    },
+  },
+  experience: {
+    eyebrow: 'Expérience',
+    heading: 'Mon parcours professionnel.',
+    intro:
+      'Neuf postes entre Maurice et la France, dans l’industrie, les services informatiques, l’hôtellerie aéroportuaire, l’enseignement supérieur et en agence web.',
+    current: 'En poste',
+    internship: 'Stage',
+    present: 'aujourd’hui',
+  },
+  education: {
+    eyebrow: 'Formation',
+    heading: 'Formé à Maurice et en France.',
+  },
+  projects: {
+    eyebrow: 'Réalisations',
+    heading: 'Ce que j’ai réalisé.',
+    intro: 'Des applications utilisées au quotidien : le problème, l’approche et ce qui a changé.',
+    sample: 'Exemple — à remplacer',
+    live: 'Voir le site',
+    code: 'Code',
+    all: 'Tous',
+    emptyTitle: 'Études de cas bientôt disponibles',
+    emptyBody:
+      'Je suis en train de rédiger mes projets récents. En attendant, je vous présenterai volontiers mes réalisations et ma démarche : il suffit de me contacter.',
+    emptyCta: 'Parlons de mes projets',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    heading: 'Un projet en tête ?',
+    intro:
+      'Présentez-moi votre projet : je vous dirai franchement si je suis la bonne personne pour le mener, et ce qu’il demandera dans les grandes lignes.',
+    email: 'E-mail',
+    phone: 'Téléphone',
+    whatsappValue: 'Écrivez-moi directement',
+    basedIn: (location, timezone) =>
+      `Basé à ${location} (${timezone}). Je travaille avec des clients en Europe, en Afrique et en Asie, et je m’adapte à vos horaires.`,
+    copy: (label) => `Copier (${label})`,
+    copied: (label) => `${label} copié`,
+    copiedStatus: (label) => `${label} copié dans le presse-papiers`,
+  },
+  form: {
+    name: 'Nom',
+    namePlaceholder: 'Marie Dupont',
+    email: 'E-mail',
+    emailPlaceholder: 'marie@entreprise.fr',
+    projectType: 'Type de projet',
+    types: {
+      'web-app': 'Application web',
+      'mobile-app': 'Application mobile',
+      'api-backend': 'API et back-end',
+      other: 'Autre',
+    },
+    message: 'Parlez-moi de votre projet',
+    messagePlaceholder:
+      'Quelques lignes sur le projet, le calendrier et ce qui en ferait une réussite pour vous.',
+    honeypot: 'Société (laisser vide)',
+    errors: {
+      name: 'Veuillez indiquer votre nom.',
+      email: 'Veuillez indiquer une adresse e-mail valide.',
+      messageShort: 'Merci de donner un peu plus de détails (20 caractères minimum).',
+      messageLong: 'Ce message dépasse la longueur autorisée. Écrivez-moi directement par e-mail.',
+      send: (email) => `L’envoi a échoué. Écrivez-moi directement à ${email}.`,
+    },
+    sending: 'Envoi en cours…',
+    send: 'Envoyer le message',
+    sentTitle: 'Message envoyé',
+    sentBody: 'Merci ! Je vous réponds d’ici un ou deux jours.',
+    sendAnother: 'Envoyer un autre message',
+  },
+  footer: {
+    builtWith: 'Réalisé avec React · Three.js · Tailwind',
+    linkedin: 'Profil LinkedIn',
+    email: (name) => `Écrire à ${name}`,
+    marks:
+      'Les noms et marques des entreprises et établissements cités appartiennent à leurs propriétaires respectifs et ne figurent ici qu’à titre d’identification.',
+    quoteOpen: '« ',
+    quoteClose: ' »',
+    modelBy: 'par Green Squadron, sous licence',
+    modelNote: ', compressé pour le web.',
+  },
+};
+
+export const ui: Record<Locale, UiStrings> = { en, fr };

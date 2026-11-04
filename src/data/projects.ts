@@ -28,30 +28,45 @@ import type { Project } from '@/types';
 export const projects: Project[] = [
   {
     id: 'sample-manufacturing-portal',
-    title: 'Manufacturing Operations Portal',
-    outcome: 'Replaced spreadsheet tracking for a 1,700-person production floor.',
-    description:
-      'An internal web platform giving production, planning and QA teams a shared live view of orders moving through the factory. Built as a Laravel API with a Vue front-end.',
+    title: { en: 'Manufacturing Operations Portal', fr: 'Portail des opérations de production' },
+    outcome: {
+      en: 'Replaced spreadsheet tracking for a 1,700-person production floor.',
+      fr: 'A remplacé le suivi sur tableur d’un atelier de 1 700 personnes.',
+    },
+    description: {
+      en: 'An internal web platform giving production, planning and QA teams a shared live view of orders moving through the factory. Built as a Laravel API with a Vue front-end.',
+      fr: 'Une plateforme web interne qui offre aux équipes de production, de planification et de qualité une vue partagée, en temps réel, des commandes en cours dans l’usine. Construite sur une API Laravel avec un front-end Vue.',
+    },
     tech: ['Laravel', 'Vue.js', 'MySQL', 'Bootstrap'],
     featured: true,
     isPlaceholder: true,
   },
   {
     id: 'sample-crm-integration',
-    title: 'CRM Integration Layer',
-    outcome: 'Connected three disconnected business systems into one workflow.',
-    description:
-      'A service layer synchronising customer and sales data between an in-house CRM, an accounting system and a reporting warehouse.',
+    title: { en: 'CRM Integration Layer', fr: 'Couche d’intégration CRM' },
+    outcome: {
+      en: 'Connected three disconnected business systems into one workflow.',
+      fr: 'A relié trois systèmes métier cloisonnés en un seul flux de travail.',
+    },
+    description: {
+      en: 'A service layer synchronising customer and sales data between an in-house CRM, an accounting system and a reporting warehouse.',
+      fr: 'Une couche de services qui synchronise les données clients et ventes entre un CRM interne, un logiciel comptable et un entrepôt de reporting.',
+    },
     tech: ['Symfony', 'PHP', 'MySQL', 'REST APIs'],
     featured: false,
     isPlaceholder: true,
   },
   {
     id: 'sample-mobile-app',
-    title: 'Field Operations Mobile App',
-    outcome: 'Put a paper-based field process onto phones, offline-first.',
-    description:
-      'A cross-platform mobile application for staff working away from a desk, syncing back to a central API when a connection is available.',
+    title: { en: 'Field Operations Mobile App', fr: 'Application mobile terrain' },
+    outcome: {
+      en: 'Put a paper-based field process onto phones, offline-first.',
+      fr: 'A remplacé un processus papier sur le terrain par une application mobile conçue pour fonctionner hors ligne.',
+    },
+    description: {
+      en: 'A cross-platform mobile application for staff working away from a desk, syncing back to a central API when a connection is available.',
+      fr: 'Une application mobile multiplateforme pour les équipes sur le terrain, qui se synchronise avec une API centrale dès qu’une connexion est disponible.',
+    },
     tech: ['React Native', 'Laravel', 'MySQL'],
     featured: false,
     isPlaceholder: true,

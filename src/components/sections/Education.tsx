@@ -4,6 +4,7 @@ import { education } from '@/data/education';
 import { SectionShell } from '@/components/layout/SectionShell';
 import { Reveal } from '@/components/ui/Reveal';
 import { OrgLogo } from '@/components/ui/OrgLogo';
+import { useLocale } from '@/hooks/useLocale';
 
 /** What the footer note is *about*, so the icon reads as meaning rather than decoration. */
 const blurbIcons: Record<string, LucideIcon> = {
@@ -12,11 +13,14 @@ const blurbIcons: Record<string, LucideIcon> = {
   mcci: Users,
 };
 
-export const Education = () => (
+export const Education = () => {
+  const { t, l } = useLocale();
+
+  return (
   <SectionShell
     id="education"
-    eyebrow="Education"
-    heading="Trained in Mauritius and France."
+    eyebrow={t.education.eyebrow}
+    heading={t.education.heading}
   >
     {/* Two shared rows — card body, then footnote — so the footnote boxes line up
         across all three cards however the copy wraps. Browsers without subgrid
@@ -62,7 +66,7 @@ export const Education = () => (
               <div className="relative flex flex-1 flex-col">
                 <div className="flex items-start justify-between gap-3">
                   <span className="mono-label rounded-full bg-accent-soft px-2.5 py-1 text-accent-deep">
-                    {degree.start.split(' ')[1]}–{degree.end.split(' ')[1]}
+                    {degree.start.slice(0, 4)}–{degree.end.slice(0, 4)}
                   </span>
                   <span className="shrink-0 [perspective:600px]">
                     {/* The disc stays white in both themes — several of these logos
@@ -79,12 +83,12 @@ export const Education = () => (
                 </div>
 
                 <p className="mt-5 text-caption font-medium text-accent">
-                  {degree.credential}
+                  {l(degree.credential)}
                 </p>
-                <h3 className="mt-1 text-h3 text-ink">{degree.field}</h3>
+                <h3 className="mt-1 text-h3 text-ink">{l(degree.field)}</h3>
 
                 {degree.subtitle !== undefined ? (
-                  <p className="mt-2.5 text-caption text-ink-faint">{degree.subtitle}</p>
+                  <p className="mt-2.5 text-caption text-ink-faint">{l(degree.subtitle)}</p>
                 ) : null}
 
                 <div className="mt-4 mb-auto">
@@ -104,7 +108,7 @@ export const Education = () => (
                       {degree.institution}
                     </span>
                   )}
-                  <p className="text-[0.75rem] text-ink-ghost">{degree.location}</p>
+                  <p className="text-[0.75rem] text-ink-ghost">{l(degree.location)}</p>
                 </div>
               </div>
 
@@ -115,7 +119,7 @@ export const Education = () => (
                   strokeWidth={1.75}
                 />
                 <p className="text-[0.8125rem] leading-relaxed text-ink-soft">
-                  {degree.blurb}
+                  {l(degree.blurb)}
                 </p>
               </div>
             </article>
@@ -124,4 +128,5 @@ export const Education = () => (
       })}
     </ul>
   </SectionShell>
-);
+  );
+};

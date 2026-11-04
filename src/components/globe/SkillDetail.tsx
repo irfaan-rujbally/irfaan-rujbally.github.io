@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { categoryLabels } from '@/data/skills';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useLocale } from '@/hooks/useLocale';
 import { EASE_EXPO } from '@/lib/motionVariants';
 import { asset } from '@/lib/cn';
 import type { Skill } from '@/types';
@@ -12,6 +12,7 @@ type SkillDetailProps = {
 
 export const SkillDetail = ({ skill, pinned }: SkillDetailProps) => {
   const reduced = usePrefersReducedMotion();
+  const { t, l } = useLocale();
 
   return (
     <div className="min-h-[7rem]">
@@ -25,7 +26,7 @@ export const SkillDetail = ({ skill, pinned }: SkillDetailProps) => {
             transition={{ duration: 0.2 }}
             className="rounded-card border border-dashed border-line px-5 py-6 text-caption text-ink-faint"
           >
-            Hover or select a technology to see where I&rsquo;ve used it.
+            {t.skills.emptyDetail}
           </motion.p>
         ) : (
           <motion.div
@@ -51,15 +52,15 @@ export const SkillDetail = ({ skill, pinned }: SkillDetailProps) => {
                   <h3 className="text-h3 text-ink">{skill.name}</h3>
                   {pinned ? (
                     <span className="mono-label rounded-full bg-accent-soft px-2 py-0.5 text-[0.5625rem] text-accent-deep">
-                      Pinned
+                      {t.skills.pinned}
                     </span>
                   ) : null}
                 </div>
                 <p className="mono-label mt-0.5 text-ink-faint">
-                  {categoryLabels[skill.category]}
+                  {t.skills.categories[skill.category]}
                 </p>
-                {skill.note !== '' ? (
-                  <p className="mt-2.5 text-caption text-ink-soft">{skill.note}</p>
+                {l(skill.note) !== '' ? (
+                  <p className="mt-2.5 text-caption text-ink-soft">{l(skill.note)}</p>
                 ) : null}
 
                 {/* yearsOfUse of 0 means "not yet confirmed" — hide rather than
@@ -67,9 +68,9 @@ export const SkillDetail = ({ skill, pinned }: SkillDetailProps) => {
                 {skill.yearsOfUse > 0 ? (
                   <div className="mt-3.5">
                     <div className="mb-1.5 flex items-baseline justify-between">
-                      <span className="mono-label text-ink-faint">Experience</span>
+                      <span className="mono-label text-ink-faint">{t.skills.experience}</span>
                       <span className="font-mono text-[0.75rem] font-medium text-ink">
-                        {skill.yearsOfUse} yr{skill.yearsOfUse === 1 ? '' : 's'}
+                        {t.skills.years(skill.yearsOfUse)}
                       </span>
                     </div>
                     <div className="h-1 overflow-hidden rounded-full bg-surface-sunk">

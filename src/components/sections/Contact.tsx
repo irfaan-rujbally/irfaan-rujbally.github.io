@@ -4,6 +4,8 @@ import type { ComponentType, SVGProps } from 'react';
 import { profile } from '@/data/profile';
 import { Reveal } from '@/components/ui/Reveal';
 import { CopyButton } from '@/components/ui/CopyButton';
+import { useLocale } from '@/hooks/useLocale';
+import type { UiStrings } from '@/i18n/ui';
 import { Suspense, lazy } from 'react';
 
 /* zod + react-hook-form are ~60kB gzipped and the form sits below the fold. */
@@ -20,17 +22,17 @@ type Channel = {
   external?: boolean;
 };
 
-const channels: Channel[] = [
+const channelsFor = (t: UiStrings): Channel[] => [
   {
     icon: Mail,
-    label: 'Email',
+    label: t.contact.email,
     value: profile.email,
     href: `mailto:${profile.email}`,
     copyValue: profile.email,
   },
   {
     icon: Phone,
-    label: 'Phone',
+    label: t.contact.phone,
     value: profile.phone,
     href: profile.phoneHref,
     copyValue: profile.phone,
@@ -38,7 +40,7 @@ const channels: Channel[] = [
   {
     icon: MessageCircle,
     label: 'WhatsApp',
-    value: 'Message me directly',
+    value: t.contact.whatsappValue,
     href: profile.whatsappUrl,
     external: true,
   },
@@ -51,7 +53,11 @@ const channels: Channel[] = [
   },
 ];
 
-export const Contact = () => (
+export const Contact = () => {
+  const { t, l } = useLocale();
+  const channels = channelsFor(t);
+
+  return (
   <section id="contact" aria-labelledby="contact-heading" className="section-y relative">
     <div className="shell">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -59,14 +65,13 @@ export const Contact = () => (
           <Reveal>
             <p className="mono-label mb-4 flex items-center gap-2 text-accent">
               <span className="hairline-rule inline-block w-6" />
-              Contact
+              {t.contact.eyebrow}
             </p>
             <h2 id="contact-heading" className="text-h1 text-ink">
-              Have a project in mind?
+              {t.contact.heading}
             </h2>
             <p className="mt-5 max-w-[46ch] text-body-l text-ink-soft">
-              Tell me what you&rsquo;re building and I&rsquo;ll tell you honestly
-              whether I&rsquo;m the right person for it — and roughly what it takes.
+              {t.contact.intro}
             </p>
           </Reveal>
 
@@ -101,8 +106,7 @@ export const Contact = () => (
 
           <Reveal delay={0.2}>
             <p className="mt-6 text-caption text-ink-faint">
-              Based in {profile.location} ({profile.timezone}). I work with clients
-              in Europe, Africa and Asia — happy to fit your hours.
+              {t.contact.basedIn(l(profile.location), profile.timezone)}
             </p>
           </Reveal>
         </div>
@@ -122,4 +126,5 @@ export const Contact = () => (
       </div>
     </div>
   </section>
-);
+  );
+};

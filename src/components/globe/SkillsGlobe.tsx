@@ -1,6 +1,7 @@
 import { Suspense, lazy, useCallback, useMemo, useRef, useState } from 'react';
 import { Boxes, Globe as GlobeIcon } from 'lucide-react';
-import { skills as allSkills, categoryLabels, categoryOrder } from '@/data/skills';
+import { skills as allSkills, categoryOrder } from '@/data/skills';
+import { useLocale } from '@/hooks/useLocale';
 import { useInViewport } from '@/hooks/useInViewport';
 import { useIsMobile } from '@/hooks/useMediaQuery';
 import { useIsDarkTheme } from '@/hooks/useIsDarkTheme';
@@ -40,6 +41,7 @@ export const SkillsGlobe = () => {
   const inViewport = useInViewport(containerRef, '200px');
   const isMobile = useIsMobile();
   const darkMode = useIsDarkTheme();
+  const { t, l } = useLocale();
 
   const [webglOk] = useState(supportsWebGL);
   const [weak] = useState(isWeakDevice);
@@ -126,8 +128,8 @@ export const SkillsGlobe = () => {
           <div className="mt-5 flex items-center justify-between gap-4">
             <p className="text-caption text-ink-faint">
               {showGlobe
-                ? 'Drag the sphere. Click a logo to pin it.'
-                : 'Select a technology to see the detail.'}
+                ? t.skills.dragHint
+                : t.skills.selectHint}
             </p>
             <button
               type="button"
@@ -138,12 +140,12 @@ export const SkillsGlobe = () => {
               {showGlobe ? (
                 <>
                   <Boxes className="size-3.5" strokeWidth={1.8} />
-                  View as grid
+                  {t.skills.viewGrid}
                 </>
               ) : (
                 <>
                   <GlobeIcon className="size-3.5" strokeWidth={1.8} />
-                  View as 3D globe
+                  {t.skills.viewGlobe}
                 </>
               )}
             </button>
@@ -154,10 +156,10 @@ export const SkillsGlobe = () => {
       {/* ---- Panel column --------------------------------------------------- */}
       <div className="lg:col-span-5">
         <div className="lg:sticky lg:top-28">
-          <p className="mono-label mb-3 text-ink-faint">Filter</p>
+          <p className="mono-label mb-3 text-ink-faint">{t.skills.filter}</p>
           <div className="mb-7 flex flex-wrap gap-2">
             <FilterChip active={filter === 'all'} onClick={() => setFilter('all')}>
-              {categoryLabels.all}
+              {t.skills.categories.all}
             </FilterChip>
             {categoryOrder.map((category) => (
               <FilterChip
@@ -165,7 +167,7 @@ export const SkillsGlobe = () => {
                 active={filter === category}
                 onClick={() => setFilter(category)}
               >
-                {categoryLabels[category]}
+                {t.skills.categories[category]}
               </FilterChip>
             ))}
           </div>
@@ -173,25 +175,24 @@ export const SkillsGlobe = () => {
           <SkillDetail skill={activeSkill} pinned={selectedId !== null} />
 
           <p className="mt-6 text-caption text-ink-faint">
-            {allSkills.length} technologies across languages, frameworks,
-            databases and tooling — the working set from ten years of shipping.
+            {t.skills.summary(allSkills.length)}
           </p>
         </div>
       </div>
 
       {/* Canvas content is not in the accessibility tree, so mirror it here. */}
       <div className="sr-only">
-        <h3>Full list of technologies</h3>
+        <h3>{t.skills.fullList}</h3>
         {categoryOrder.map((category) => (
           <section key={category}>
-            <h4>{categoryLabels[category]}</h4>
+            <h4>{t.skills.categories[category]}</h4>
             <ul>
               {allSkills
                 .filter((skill) => skill.category === category)
                 .map((skill) => (
                   <li key={skill.id}>
                     {skill.name}
-                    {skill.note !== '' ? ` — ${skill.note}` : ''}
+                    {l(skill.note) !== '' ? ` — ${l(skill.note)}` : ''}
                   </li>
                 ))}
             </ul>

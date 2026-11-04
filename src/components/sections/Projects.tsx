@@ -4,6 +4,7 @@ import { ArrowUpRight, Code2, FolderOpen, Mail } from 'lucide-react';
 import { visibleProjects } from '@/data/projects';
 import { profile } from '@/data/profile';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useLocale } from '@/hooks/useLocale';
 import { SectionShell } from '@/components/layout/SectionShell';
 import { FilterChip, Chip } from '@/components/ui/Chip';
 import { ButtonLink } from '@/components/ui/Button';
@@ -12,6 +13,7 @@ import { asset, cn } from '@/lib/cn';
 import type { Project } from '@/types';
 
 const ProjectCard = ({ project }: { project: Project }) => {
+  const { t, l } = useLocale();
   const wide = project.featured;
 
   return (
@@ -26,7 +28,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <article className="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-[transform,box-shadow,border-color,background-color,color,opacity] duration-200 ease-[var(--ease-standard)] hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]">
         {project.isPlaceholder ? (
           <span className="absolute top-3 right-3 z-20 rounded-full bg-danger px-2.5 py-1 font-mono text-[0.625rem] font-semibold tracking-wide text-white uppercase">
-            Sample — replace
+            {t.projects.sample}
           </span>
         ) : null}
 
@@ -59,12 +61,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
         ) : null}
 
         <div className="flex flex-1 flex-col p-5">
-          <h3 className="text-h3 text-ink">{project.title}</h3>
+          <h3 className="text-h3 text-ink">{l(project.title)}</h3>
           <p className="mt-1.5 text-caption font-medium text-accent">
-            {project.outcome}
+            {l(project.outcome)}
           </p>
           <p className="mt-3 flex-1 text-[0.8125rem] leading-relaxed text-ink-soft">
-            {project.description}
+            {l(project.description)}
           </p>
 
           <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -85,7 +87,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   rel="noreferrer noopener"
                   className="group/link inline-flex items-center gap-1 text-caption font-medium text-ink hover:text-accent"
                 >
-                  Live
+                  {t.projects.live}
                   <ArrowUpRight
                     className="size-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                     strokeWidth={2}
@@ -101,7 +103,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   className="group/link inline-flex items-center gap-1 text-caption font-medium text-ink hover:text-accent"
                 >
                   <Code2 className="size-3.5" strokeWidth={1.8} />
-                  Code
+                  {t.projects.code}
                 </a>
               ) : null}
             </div>
@@ -112,17 +114,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-const EmptyState = () => (
+const EmptyState = () => {
+  const { t } = useLocale();
+
+  return (
   <div className="rounded-panel border border-dashed border-line bg-surface-sunk/50 px-6 py-16 text-center">
     <FolderOpen
       className="mx-auto mb-4 size-8 text-ink-ghost"
       strokeWidth={1.4}
       aria-hidden="true"
     />
-    <h3 className="text-h3 text-ink">Case studies coming soon</h3>
+    <h3 className="text-h3 text-ink">{t.projects.emptyTitle}</h3>
     <p className="mx-auto mt-3 max-w-[46ch] text-caption text-ink-soft">
-      I&rsquo;m writing up recent work. In the meantime, I&rsquo;m happy to walk
-      through what I&rsquo;ve built and how — just get in touch.
+      {t.projects.emptyBody}
     </p>
     <ButtonLink
       href={`mailto:${profile.email}`}
@@ -131,13 +135,15 @@ const EmptyState = () => (
       variant="secondary"
     >
       <Mail className="size-4" strokeWidth={1.8} />
-      Ask me about my work
+      {t.projects.emptyCta}
     </ButtonLink>
   </div>
-);
+  );
+};
 
 export const Projects = () => {
   const reduced = usePrefersReducedMotion();
+  const { t } = useLocale();
   const [filter, setFilter] = useState<string>('all');
 
   const techOptions = useMemo(() => {
@@ -159,9 +165,9 @@ export const Projects = () => {
   return (
     <SectionShell
       id="projects"
-      eyebrow="Selected work"
-      heading="Things I've built."
-      intro="Applications that went into daily use — the problem, the approach, and what changed."
+      eyebrow={t.projects.eyebrow}
+      heading={t.projects.heading}
+      intro={t.projects.intro}
     >
       {visibleProjects.length === 0 ? (
         <EmptyState />
@@ -170,7 +176,7 @@ export const Projects = () => {
           {techOptions.length > 1 ? (
             <div className="mb-8 flex flex-wrap gap-2">
               <FilterChip active={filter === 'all'} onClick={() => setFilter('all')}>
-                All
+                {t.projects.all}
               </FilterChip>
               {techOptions.map((tech) => (
                 <FilterChip

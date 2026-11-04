@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { GlobeScene } from './GlobeScene';
 import { GlobeSkeleton } from './GlobeSkeleton';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useLocale } from '@/hooks/useLocale';
 import type { Skill } from '@/types';
 
 const DRAG_SENSITIVITY = 0.0055;
@@ -31,6 +32,7 @@ export const GlobeCanvas = ({
   darkMode,
 }: GlobeCanvasProps) => {
   const reduced = usePrefersReducedMotion();
+  const { t } = useLocale();
   const wrapRef = useRef<HTMLDivElement>(null);
   const [grabbing, setGrabbing] = useState(false);
 
@@ -128,7 +130,7 @@ export const GlobeCanvas = ({
       onPointerCancel={endDrag}
       onPointerLeave={handlePointerLeave}
       role="img"
-      aria-label={`An interactive sphere of ${skills.length} technology logos. Drag to rotate. The full list is also available as text below.`}
+      aria-label={t.skills.globeLabel(skills.length)}
       className="relative mx-auto aspect-square w-full max-w-[480px] touch-none select-none"
       style={{ cursor: grabbing ? 'grabbing' : 'grab' }}
     >

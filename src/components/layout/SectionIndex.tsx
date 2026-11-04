@@ -1,31 +1,27 @@
 import { scrollToSection } from '@/hooks/useLenis';
+import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/cn';
 import type { SectionId } from '@/types';
 
-const ITEMS: Array<{ id: SectionId; label: string }> = [
-  { id: 'hero', label: 'Top' },
-  { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'education', label: 'Education' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'contact', label: 'Contact' },
-];
+const ITEMS: SectionId[] = ['hero', 'about', 'skills', 'experience', 'education', 'projects', 'contact'];
 
 type SectionIndexProps = { active: SectionId };
 
-export const SectionIndex = ({ active }: SectionIndexProps) => (
+export const SectionIndex = ({ active }: SectionIndexProps) => {
+  const { t } = useLocale();
+
+  return (
   <nav
-    aria-label="Section navigation"
+    aria-label={t.nav.sectionIndex}
     className="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 lg:block"
   >
     <ul className="flex flex-col items-end gap-3">
-      {ITEMS.map((item) => (
+      {ITEMS.map((id) => ({ id, label: t.sections[id] })).map((item) => (
         <li key={item.id}>
           <button
             type="button"
             onClick={() => scrollToSection(item.id)}
-            aria-label={`Go to ${item.label}`}
+            aria-label={t.nav.goTo(item.label)}
             aria-current={active === item.id ? 'true' : undefined}
             className="group flex items-center gap-2"
           >
@@ -50,4 +46,5 @@ export const SectionIndex = ({ active }: SectionIndexProps) => (
       ))}
     </ul>
   </nav>
-);
+  );
+};

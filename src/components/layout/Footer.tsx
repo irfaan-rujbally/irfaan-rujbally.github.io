@@ -1,9 +1,11 @@
 import { Mail } from 'lucide-react';
 import { LinkedinIcon } from '@/components/ui/BrandIcons';
 import { profile } from '@/data/profile';
+import { useLocale } from '@/hooks/useLocale';
 
 export const Footer = () => {
   const year = new Date().getFullYear();
+  const { t } = useLocale();
 
   return (
     <footer className="relative pb-10">
@@ -16,7 +18,7 @@ export const Footer = () => {
           </p>
 
           <p className="mono-label text-ink-ghost">
-            Built with React · Three.js · Tailwind
+            {t.footer.builtWith}
           </p>
 
           <ul className="flex items-center gap-1">
@@ -26,7 +28,7 @@ export const Footer = () => {
                 href={profile.linkedinUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="LinkedIn profile"
+                aria-label={t.footer.linkedin}
                 className="grid size-9 place-items-center rounded-full text-ink-faint transition-colors hover:bg-surface-sunk hover:text-ink"
               >
                 <LinkedinIcon className="size-[17px]" />
@@ -36,7 +38,7 @@ export const Footer = () => {
               <a
                 data-magnetic
                 href={`mailto:${profile.email}`}
-                aria-label={`Email ${profile.firstName}`}
+                aria-label={t.footer.email(profile.firstName)}
                 className="grid size-9 place-items-center rounded-full text-ink-faint transition-colors hover:bg-surface-sunk hover:text-ink"
               >
                 <Mail className="size-[18px]" strokeWidth={1.7} />
@@ -46,11 +48,10 @@ export const Footer = () => {
         </div>
 
         <p className="mt-8 text-center text-[0.6875rem] leading-relaxed text-ink-ghost md:text-left">
-          All company and institution names and marks are the property of their
-          respective owners and appear here for identification purposes only.
+          {t.footer.marks}
         </p>
         <p className="mt-2 text-center text-[0.6875rem] leading-relaxed text-ink-ghost md:text-left">
-          “
+          {t.footer.quoteOpen}
           <a
             href="https://sketchfab.com/3d-models/millennium-falcon-d7f48553ff084205853334300aeaa9c6"
             target="_blank"
@@ -59,7 +60,7 @@ export const Footer = () => {
           >
             Millennium Falcon
           </a>
-          ” by Green Squadron, licensed under{' '}
+          {t.footer.quoteClose} {t.footer.modelBy}{' '}
           <a
             href="https://creativecommons.org/licenses/by/4.0/"
             target="_blank"
@@ -68,7 +69,7 @@ export const Footer = () => {
           >
             CC BY 4.0
           </a>
-          , compressed for the web.
+          {t.footer.modelNote}
         </p>
       </div>
     </footer>

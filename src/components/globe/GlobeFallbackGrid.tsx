@@ -1,4 +1,5 @@
-import { categoryLabels, categoryOrder } from '@/data/skills';
+import { categoryOrder } from '@/data/skills';
+import { useLocale } from '@/hooks/useLocale';
 import { asset, cn } from '@/lib/cn';
 import type { Skill } from '@/types';
 
@@ -19,6 +20,7 @@ export const GlobeFallbackGrid = ({
   selectedId,
   onSelect,
 }: GlobeFallbackGridProps) => {
+  const { t } = useLocale();
   const groups = categoryOrder
     .map((category) => ({
       category,
@@ -34,7 +36,7 @@ export const GlobeFallbackGrid = ({
       {groups.map((group) => (
         <div key={group.category}>
           <p className="mono-label mb-3 text-ink-faint">
-            {categoryLabels[group.category]}
+            {t.skills.categories[group.category]}
           </p>
           <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-5">
             {group.items.map((skill) => (

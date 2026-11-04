@@ -17,7 +17,7 @@ export const injectStructuredData = (): void => {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: profile.name,
-    jobTitle: profile.title,
+    jobTitle: profile.title.en,
     description: seo.description,
     url: seo.url,
     email: `mailto:${profile.email}`,
@@ -28,7 +28,7 @@ export const injectStructuredData = (): void => {
       addressCountry: 'MU',
     },
     nationality: { '@type': 'Country', name: 'Mauritius' },
-    knowsLanguage: profile.languages.map((language) => language.name),
+    knowsLanguage: profile.languages.map((language) => language.name.en),
     alumniOf: education.map((degree) => ({
       '@type': 'EducationalOrganization',
       name: degree.institution,

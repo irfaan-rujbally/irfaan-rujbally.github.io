@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { experience } from '@/data/experience';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useLocale } from '@/hooks/useLocale';
 import { SectionShell } from '@/components/layout/SectionShell';
 import { OrgMark } from '@/components/ui/OrgMark';
 import { reducedFade, slideInLeft, viewportOnce } from '@/lib/motionVariants';
@@ -12,6 +13,7 @@ type RoleCardProps = { role: Role; index: number; showYear: boolean };
 
 const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
   const reduced = usePrefersReducedMotion();
+  const { t, l, month } = useLocale();
   const isInternship = role.type === 'internship';
 
   /* A tight hot arc rather than a slow fade: the colour is only near-full over
@@ -88,7 +90,7 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
                   isInternship ? 'text-[0.9375rem] font-semibold' : 'text-h3',
                 )}
               >
-                {role.title}
+                {l(role.title)}
               </h3>
               <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1">
                 {role.companyUrl !== undefined ? (
@@ -111,13 +113,13 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
                 {role.current ? (
                   <span className="mono-label inline-flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-[0.5625rem] text-accent-deep">
                     <span className="size-1 rounded-full bg-live" />
-                    Current
+                    {t.experience.current}
                   </span>
                 ) : null}
 
                 {isInternship ? (
                   <span className="mono-label rounded-full bg-surface-sunk px-2 py-0.5 text-[0.5625rem] text-ink-faint">
-                    Internship
+                    {t.experience.internship}
                   </span>
                 ) : null}
               </p>
@@ -126,15 +128,15 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
 
           <div className="shrink-0 sm:text-right">
             <p className="mono-label text-ink-faint">
-              {role.start} — {role.end}
+              {month(role.start)} — {role.end !== undefined ? month(role.end) : t.experience.present}
             </p>
-            <p className="mt-1 text-[0.75rem] text-ink-ghost">{role.location}</p>
+            <p className="mt-1 text-[0.75rem] text-ink-ghost">{l(role.location)}</p>
           </div>
         </div>
 
         {!isInternship ? (
           <ul className="mt-4 flex flex-col gap-2 border-t border-line pt-4">
-            {role.highlights.map((highlight) => (
+            {l(role.highlights).map((highlight) => (
               <li
                 key={highlight}
                 className="flex gap-2.5 text-caption text-ink-soft"
@@ -155,12 +157,15 @@ const RoleCard = ({ role, index, showYear }: RoleCardProps) => {
   );
 };
 
-export const Experience = () => (
+export const Experience = () => {
+  const { t } = useLocale();
+
+  return (
   <SectionShell
     id="experience"
-    eyebrow="Experience"
-    heading="Where I've worked."
-    intro="Eight roles across Mauritius and France — manufacturing, IT services, aviation hospitality, higher education and agency work."
+    eyebrow={t.experience.eyebrow}
+    heading={t.experience.heading}
+    intro={t.experience.intro}
   >
     <ol className="flex max-w-5xl flex-col gap-4">
       {experience.map((role, index) => (
@@ -173,4 +178,5 @@ export const Experience = () => (
       ))}
     </ol>
   </SectionShell>
-);
+  );
+};

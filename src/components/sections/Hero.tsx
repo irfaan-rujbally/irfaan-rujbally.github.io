@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight, Download } from 'lucide-react';
 import { profile } from '@/data/profile';
 import { scrollToSection } from '@/hooks/useLenis';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useLocale } from '@/hooks/useLocale';
 import { MeshGradient } from '@/components/fx/MeshGradient';
 import { HeroOrbit } from '@/components/fx/HeroOrbit';
 import { TextReveal } from '@/components/fx/TextReveal';
@@ -14,6 +15,7 @@ import { asset } from '@/lib/cn';
 
 export const Hero = () => {
   const reduced = usePrefersReducedMotion();
+  const { t, l } = useLocale();
 
   const rise = (delay: number) => ({
     initial: reduced ? { opacity: 0 } : { opacity: 0, y: 20 },
@@ -43,10 +45,10 @@ export const Hero = () => {
               className="size-1.5 rounded-full bg-live"
               style={{ animation: reduced ? undefined : 'pulse-dot 2.2s ease-in-out infinite' }}
             />
-            {profile.availability}
+            {l(profile.availability)}
             <span className="hidden sm:inline">
               {' '}
-              — Mauritius ({profile.timezone})
+              — {t.hero.region} ({profile.timezone})
             </span>
           </span>
         </motion.div>
@@ -65,30 +67,30 @@ export const Hero = () => {
           {...rise(0.55)}
           className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-h2 text-ink-faint"
         >
-          <span className="text-ink-ghost">I&rsquo;m a</span>
-          <RoleRotator roles={profile.roles} className="text-accent" />
+          <span className="text-ink-ghost">{t.hero.iAmA}</span>
+          <RoleRotator roles={l(profile.roles)} className="text-accent" />
         </motion.p>
 
         <motion.p
           {...rise(0.68)}
           className="mt-7 max-w-[42ch] text-body-l text-ink-soft"
         >
-          {profile.heroLine}
+          {l(profile.heroLine)}
         </motion.p>
 
         <motion.div {...rise(0.8)} className="mt-10 flex flex-wrap items-center gap-3">
           <Button size="lg" onClick={() => scrollToSection('projects')}>
-            See my work
+            {t.hero.seeWork}
             <ArrowUpRight className="size-[18px]" strokeWidth={2} />
           </Button>
           <ButtonLink
             variant="secondary"
             size="lg"
-            href={asset(profile.cvPath)}
+            href={asset(l(profile.cvPath))}
             download
           >
             <Download className="size-[18px]" strokeWidth={1.8} />
-            Download CV
+            {t.hero.downloadCv}
           </ButtonLink>
         </motion.div>
 
@@ -97,8 +99,8 @@ export const Hero = () => {
           className="mt-16 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4"
         >
           {profile.stats.map((stat) => (
-            <div key={stat.label} className="border-l border-line pl-4">
-              <dt className="mono-label mb-1.5 text-ink-faint">{stat.label}</dt>
+            <div key={stat.value + stat.label.en} className="border-l border-line pl-4">
+              <dt className="mono-label mb-1.5 text-ink-faint">{l(stat.label)}</dt>
               <dd className="font-mono text-[1.75rem] leading-none font-semibold tracking-tight text-ink">
                 <CountUp value={stat.value} suffix={stat.suffix} />
               </dd>
@@ -110,7 +112,7 @@ export const Hero = () => {
       <motion.button
         type="button"
         onClick={() => scrollToSection('about')}
-        aria-label="Scroll to About"
+        aria-label={t.hero.scrollToAbout}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: reduced ? 0 : 1.4, duration: 0.8 }}

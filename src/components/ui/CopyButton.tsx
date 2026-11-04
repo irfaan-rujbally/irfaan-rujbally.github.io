@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { useLocale } from '@/hooks/useLocale';
 
 type CopyButtonProps = {
   value: string;
@@ -10,6 +11,7 @@ type CopyButtonProps = {
 
 export const CopyButton = ({ value, label, className }: CopyButtonProps) => {
   const [copied, setCopied] = useState(false);
+  const { t } = useLocale();
 
   useEffect(() => {
     if (!copied) return undefined;
@@ -30,7 +32,7 @@ export const CopyButton = ({ value, label, className }: CopyButtonProps) => {
     <button
       type="button"
       onClick={() => void handleCopy()}
-      aria-label={copied ? `${label} copied` : `Copy ${label}`}
+      aria-label={copied ? t.contact.copied(label) : t.contact.copy(label)}
       className={cn(
         'grid size-8 shrink-0 place-items-center rounded-lg text-ink-faint',
         'transition-colors duration-200 hover:bg-surface-sunk hover:text-ink',
@@ -43,7 +45,7 @@ export const CopyButton = ({ value, label, className }: CopyButtonProps) => {
         <Copy className="size-4" strokeWidth={1.8} />
       )}
       <span role="status" aria-live="polite" className="sr-only">
-        {copied ? `${label} copied to clipboard` : ''}
+        {copied ? t.contact.copiedStatus(label) : ''}
       </span>
     </button>
   );

@@ -1,6 +1,7 @@
 import { useLenis } from '@/hooks/useLenis';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useTheme } from '@/hooks/useTheme';
+import { useDocumentMeta } from '@/hooks/useLocale';
 import { Nav } from '@/components/layout/Nav';
 import { SectionIndex } from '@/components/layout/SectionIndex';
 import { Footer } from '@/components/layout/Footer';
@@ -32,6 +33,7 @@ export const App = () => {
   useLenis();
   const active = useActiveSection(SECTIONS);
   const { theme } = useTheme();
+  useDocumentMeta();
 
   return (
     <>
