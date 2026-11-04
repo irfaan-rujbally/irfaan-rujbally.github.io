@@ -69,7 +69,7 @@ const en = {
     fullList: 'Full list of technologies',
     globeLabel: (count: number) =>
       `An interactive sphere of ${count} technology logos. Drag to rotate. The full list is also available as text below.`,
-    emptyDetail: 'Hover or select a technology to see where I’ve used it.',
+    emptyDetail: 'Hover or select a technology to see more details.',
     pinned: 'Pinned',
     experience: 'Experience',
     years: (n: number) => `${n} yr${n === 1 ? '' : 's'}`,
@@ -229,7 +229,7 @@ const fr: UiStrings = {
     fullList: 'Liste complète des technologies',
     globeLabel: (count) =>
       `Sphère interactive présentant ${count} logos de technologies. Faites-la glisser pour la faire tourner. La liste complète figure aussi sous forme de texte ci-dessous.`,
-    emptyDetail: 'Survolez ou sélectionnez une technologie pour voir où je l’ai utilisée.',
+    emptyDetail: 'Survolez ou sélectionnez une technologie pour voir plus de détails.',
     pinned: 'Épinglée',
     experience: 'Expérience',
     years: (n) => `${n} an${n === 1 ? '' : 's'}`,
