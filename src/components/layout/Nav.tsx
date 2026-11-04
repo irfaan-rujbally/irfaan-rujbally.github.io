@@ -10,7 +10,7 @@ import { EASE_EXPO } from '@/lib/motionVariants';
 import { cn } from '@/lib/cn';
 import type { SectionId } from '@/types';
 
-const LINK_IDS: SectionId[] = ['about', 'skills', 'experience', 'projects'];
+const LINK_IDS: SectionId[] = ['about', 'skills', 'experience', 'education', 'projects'];
 const MENU_IDS: SectionId[] = ['about', 'skills', 'experience', 'education', 'projects', 'contact'];
 
 type NavProps = { active: SectionId };
@@ -79,7 +79,7 @@ export const Nav = ({ active }: NavProps) => {
             </span>
           </button>
 
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {LINKS.map((link) => (
               <li key={link.id}>
                 <button
@@ -152,7 +152,7 @@ export const Nav = ({ active }: NavProps) => {
               onClick={() => setMenuOpen(true)}
               aria-label={t.nav.openMenu}
               aria-expanded={menuOpen}
-              className="grid size-9 place-items-center rounded-full text-ink transition-colors hover:bg-surface-sunk md:hidden"
+              className="grid size-9 place-items-center rounded-full text-ink transition-colors hover:bg-surface-sunk lg:hidden"
             >
               <Menu className="size-5" strokeWidth={1.8} />
             </button>
@@ -163,7 +163,7 @@ export const Nav = ({ active }: NavProps) => {
       <AnimatePresence>
         {menuOpen ? (
           <motion.div
-            className="glass fixed inset-0 z-[70] md:hidden"
+            className="glass fixed inset-0 z-[70] lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
