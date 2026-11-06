@@ -30,9 +30,14 @@ export const useShipClick = (
   );
 
   useEffect(() => {
+    /* composedPath() is recorded when the event fires, so it still holds the
+       button even if React has already swapped the clicked icon out of the DOM
+       (the theme button does exactly that), where target.closest() would miss. */
     const toNdc = (event: MouseEvent): Vector2 | null => {
-      const element = event.target instanceof Element ? event.target : null;
-      if (element?.closest(INTERACTIVE) != null) return null;
+      const onControl = event
+        .composedPath()
+        .some((node) => node instanceof Element && node.matches(INTERACTIVE));
+      if (onControl) return null;
       return new Vector2(
         (event.clientX / window.innerWidth) * 2 - 1,
         -(event.clientY / window.innerHeight) * 2 + 1,
@@ -52,8 +57,11 @@ export const useShipClick = (
 
     window.addEventListener('pointermove', onMove, { passive: true });
     document.addEventListener('pointerleave', onLeave);
-    window.addEventListener('click', onClickAnywhere);
+    /* A theme switch can mount this hook in the middle of the very click that
+       caused it; listening from the next task on keeps that click from counting. */
+    const arm = window.setTimeout(() => window.addEventListener('click', onClickAnywhere), 0);
     return () => {
+      window.clearTimeout(arm);
       window.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerleave', onLeave);
       window.removeEventListener('click', onClickAnywhere);

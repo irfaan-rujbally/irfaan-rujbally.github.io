@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { motion } from 'motion/react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { maskedChar, staggerParent } from '@/lib/motionVariants';
@@ -9,6 +10,10 @@ type TextRevealProps = {
   delay?: number;
   /** Rendered as one word per line-safe group so long names wrap cleanly. */
   stagger?: number;
+  /** Extra class on each character, which also gets its position as `--i`. */
+  charClassName?: string;
+  /** Where `--i` starts, so two reveals can number one continuous run of letters. */
+  startIndex?: number;
 };
 
 /**
@@ -20,6 +25,8 @@ export const TextReveal = ({
   className,
   delay = 0,
   stagger = 0.03,
+  charClassName,
+  startIndex = 0,
 }: TextRevealProps) => {
   const reduced = usePrefersReducedMotion();
   const words = text.split(' ');
@@ -28,7 +35,7 @@ export const TextReveal = ({
     return <span className={className}>{text}</span>;
   }
 
-  let charIndex = 0;
+  let charIndex = startIndex;
 
   return (
     <motion.span
@@ -52,7 +59,11 @@ export const TextReveal = ({
                 className="inline-block overflow-hidden align-bottom"
                 style={{ paddingBottom: '0.12em', marginBottom: '-0.12em' }}
               >
-                <motion.span className="inline-block" variants={maskedChar}>
+                <motion.span
+                  className={cn('inline-block', charClassName)}
+                  style={{ '--i': charIndex } as CSSProperties}
+                  variants={maskedChar}
+                >
                   {char}
                 </motion.span>
               </span>

@@ -1,4 +1,4 @@
-import { MapPin, Mountain, Code2, Waves, Trophy } from 'lucide-react';
+import { MapPin, Mountain, Code2, Waves, Trophy, Fish } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
 import { profile } from '@/data/profile';
@@ -14,6 +14,7 @@ const INTEREST_ICONS: Record<string, LucideIcon> = {
   webdev: Code2,
   diving: Waves,
   hiking: Mountain,
+  fishing: Fish,
 };
 
 export const About = () => {

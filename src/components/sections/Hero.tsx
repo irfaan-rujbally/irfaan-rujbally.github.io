@@ -56,11 +56,16 @@ export const Hero = () => {
 
         <h1
           id="hero-heading"
-          className="mt-7 max-w-[16ch] text-display text-ink lg:max-w-[10ch]"
+          className="name-shine mt-7 max-w-[16ch] text-display text-ink lg:max-w-[10ch]"
         >
-          <TextReveal text={profile.firstName} delay={0.15} />{' '}
+          <TextReveal text={profile.firstName} delay={0.15} charClassName="name-char" />{' '}
           <span className="block sm:inline">
-            <TextReveal text={profile.lastName} delay={0.32} />
+            <TextReveal
+              text={profile.lastName}
+              delay={0.32}
+              charClassName="name-char"
+              startIndex={profile.firstName.length}
+            />
           </span>
         </h1>
 

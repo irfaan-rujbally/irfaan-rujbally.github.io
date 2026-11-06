@@ -109,6 +109,7 @@ export const profile = {
     { id: 'webdev', label: { en: 'Web development', fr: 'Développement web' } },
     { id: 'diving', label: { en: 'Diving', fr: 'Plongée' } },
     { id: 'hiking', label: { en: 'Hiking', fr: 'Randonnée' } },
+    { id: 'fishing', label: { en: 'Fishing', fr: 'Pêche' } },
   ] as Array<{ id: string; label: Localized }>,
 } as const;
 
