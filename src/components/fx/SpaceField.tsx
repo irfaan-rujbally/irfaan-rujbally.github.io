@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
-import { drawMeteor, paintGalaxy, paintNebula, paintPlanet, type Meteor } from './spaceBodies';
+import { getScrollVelocity, startScrollSpeed } from '@/lib/scrollSpeed';
+import type { SectionId } from '@/types';
+import { BODIES, drawMeteor, paintNebula, type Body, type Meteor } from './spaceBodies';
+import { SECTION_TINTS, drawFlash, drawStreak, drawTint, easeRgb } from './spaceEffects';
 
 /*
  * The Star Wars mode backdrop: parallax star layers, a few planets and galaxies
- * that scroll at their own depth, and a hyperspace streak when the mode starts.
+ * that scroll at their own depth, a sky tint per section, and hyperspace
+ * streaks both when the mode starts and whenever the page is scrolled fast.
  * Same contract as AtomField — fixed behind the page, 2D canvas, paused while
  * the tab is hidden, held still for reduced motion.
  */
@@ -17,22 +21,16 @@ const STAR_LAYERS = [
 const WARP_SECONDS = 1.3;
 
 type Star = { x: number; y: number; r: number; alpha: number; phase: number; layer: number };
-type Body = { sprite: HTMLCanvasElement; x: number; y: number; depth: number; alpha: number; spin: number };
-
-const BODIES = (min: number): Body[] => [
-  { sprite: paintGalaxy(min * 0.42, ['rgb(150, 180, 255)', 'rgb(220, 160, 255)'], 0.5), x: 0.4, y: 0.16, depth: 0.04, alpha: 0.75, spin: 0.004 },
-  { sprite: paintGalaxy(min * 0.26, ['rgb(255, 190, 150)', 'rgb(160, 220, 255)'], -0.7), x: 0.16, y: 0.9, depth: 0.03, alpha: 0.6, spin: -0.006 },
-  { sprite: paintPlanet(min * 0.2, { light: '#f6d9a3', mid: '#c98d4b', dark: '#4a2a12', glow: 'rgba(255, 196, 120, 0.35)', bands: '#7a4a22' }), x: 0.9, y: 0.82, depth: 0.12, alpha: 0.95, spin: 0 },
-  { sprite: paintPlanet(min * 0.055, { light: '#bfe9ff', mid: '#3d86b8', dark: '#0b2238', glow: 'rgba(120, 200, 255, 0.4)', ring: '#a9c7d8' }), x: 0.1, y: 0.36, depth: 0.08, alpha: 0.95, spin: 0 },
-  { sprite: paintPlanet(min * 0.026, { light: '#e6e6e6', mid: '#8d8d8d', dark: '#232323', glow: 'rgba(255, 255, 255, 0.15)' }), x: 0.72, y: 0.2, depth: 0.06, alpha: 0.9, spin: 0 },
-  { sprite: paintPlanet(min * 0.016, { light: '#ffb3a1', mid: '#c2412d', dark: '#3a0d07', glow: 'rgba(255, 120, 90, 0.35)' }), x: 0.55, y: 0.62, depth: 0.05, alpha: 0.85, spin: 0 },
-];
-
 const wrap = (value: number, span: number): number => ((value % span) + span) % span;
 
-export const SpaceField = () => {
+export const SpaceField = ({ active }: { active: SectionId }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const activeRef = useRef(active);
   const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -50,6 +48,8 @@ export const SpaceField = () => {
     let meteor: Meteor | null = null;
     let nextMeteor = 4 + Math.random() * 6;
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const tint: [number, number, number] = [...SECTION_TINTS[activeRef.current]];
+    const stopScrollSpeed = startScrollSpeed();
 
     const resize = (): void => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -77,8 +77,9 @@ export const SpaceField = () => {
 
     const draw = (dt: number): void => {
       elapsed += dt;
-      const warp = Math.max(0, 1 - elapsed / WARP_SECONDS) ** 2;
-      const settled = 1 - warp;
+      const intro = Math.max(0, 1 - elapsed / WARP_SECONDS) ** 2;
+      const settled = 1 - intro;
+      const warp = reduced ? 0 : Math.max(intro, Math.min(0.85, Math.abs(getScrollVelocity()) / 5000));
       const cx = width / 2;
       const cy = height / 2;
 
@@ -86,6 +87,8 @@ export const SpaceField = () => {
       pointer.y += (pointer.ty - pointer.y) * Math.min(1, dt * 2);
 
       ctx.clearRect(0, 0, width, height);
+      easeRgb(tint, SECTION_TINTS[activeRef.current], Math.min(1, dt * 1.5));
+      drawTint(ctx, width, height, tint);
       ctx.globalAlpha = settled;
       if (nebula !== null) ctx.drawImage(nebula, 0, 0, width, height);
 
@@ -98,14 +101,7 @@ export const SpaceField = () => {
         const alpha = star.alpha * twinkle;
 
         if (warp > 0.01) {
-          const stretch = warp * 0.55;
-          ctx.globalAlpha = Math.min(1, alpha + warp);
-          ctx.strokeStyle = '#dfe9ff';
-          ctx.lineWidth = star.r;
-          ctx.beginPath();
-          ctx.moveTo(x - (x - cx) * stretch, y - (y - cy) * stretch);
-          ctx.lineTo(x, y);
-          ctx.stroke();
+          drawStreak(ctx, x, y, star.r, alpha, warp, cx, cy);
         } else {
           ctx.globalAlpha = alpha;
           ctx.fillStyle = star.layer === 2 ? '#fff6d8' : '#e8eeff';
@@ -140,6 +136,7 @@ export const SpaceField = () => {
           if (meteor.life <= 0) meteor = null;
         }
       }
+      drawFlash(ctx, width, height, warp);
       ctx.globalAlpha = 1;
     };
 
@@ -181,6 +178,7 @@ export const SpaceField = () => {
 
     return () => {
       cancelAnimationFrame(frame);
+      stopScrollSpeed();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibility);

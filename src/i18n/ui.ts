@@ -149,8 +149,18 @@ const en = {
     sentBody: 'Thanks — I’ll get back to you within a day or two.',
     sendAnother: 'Send another',
   },
+  hud: {
+    lock: 'Millennium Falcon · lock',
+    rollHint: 'Click · barrel roll',
+    boot: [
+      'irfaan@falcon:~$ ./launch millennium-falcon',
+      '[ ok ] hyperdrive calibrated',
+      '[ ok ] course set for Mauritius',
+    ],
+  },
   footer: {
     builtWith: 'Built with React · Three.js · Tailwind',
+    signoff: 'May the Force be with you.',
     linkedin: 'LinkedIn profile',
     email: (name: string) => `Email ${name}`,
     marks:
@@ -310,8 +320,18 @@ const fr: UiStrings = {
     sentBody: 'Merci ! Je vous réponds d’ici un ou deux jours.',
     sendAnother: 'Envoyer un autre message',
   },
+  hud: {
+    lock: 'Millennium Falcon · verrouillé',
+    rollHint: 'Clic · tonneau',
+    boot: [
+      'irfaan@falcon:~$ ./launch millennium-falcon',
+      '[ ok ] hyperpropulseur calibré',
+      '[ ok ] cap sur Maurice',
+    ],
+  },
   footer: {
     builtWith: 'Réalisé avec React · Three.js · Tailwind',
+    signoff: 'Que la Force soit avec vous.',
     linkedin: 'Profil LinkedIn',
     email: (name) => `Écrire à ${name}`,
     marks:

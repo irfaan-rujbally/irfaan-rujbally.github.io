@@ -5,6 +5,9 @@ import { profile } from '@/data/profile';
 import { Reveal } from '@/components/ui/Reveal';
 import { CopyButton } from '@/components/ui/CopyButton';
 import { useLocale } from '@/hooks/useLocale';
+import { useTheme } from '@/hooks/useTheme';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { ScrambleText } from '@/components/fx/ScrambleText';
 import type { UiStrings } from '@/i18n/ui';
 import { Suspense, lazy } from 'react';
 
@@ -55,6 +58,8 @@ const channelsFor = (t: UiStrings): Channel[] => [
 
 export const Contact = () => {
   const { t, l } = useLocale();
+  const { theme } = useTheme();
+  const reduced = usePrefersReducedMotion();
   const channels = channelsFor(t);
 
   return (
@@ -65,7 +70,7 @@ export const Contact = () => {
           <Reveal>
             <p className="mono-label mb-4 flex items-center gap-2 text-accent">
               <span className="hairline-rule inline-block w-6" />
-              {t.contact.eyebrow}
+              {theme === 'starwars' && !reduced ? <ScrambleText text={t.contact.eyebrow} /> : t.contact.eyebrow}
             </p>
             <h2 id="contact-heading" className="text-h1 text-ink">
               {t.contact.heading}

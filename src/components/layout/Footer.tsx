@@ -2,10 +2,12 @@ import { Mail } from 'lucide-react';
 import { LinkedinIcon } from '@/components/ui/BrandIcons';
 import { profile } from '@/data/profile';
 import { useLocale } from '@/hooks/useLocale';
+import { useTheme } from '@/hooks/useTheme';
 
 export const Footer = () => {
   const year = new Date().getFullYear();
   const { t } = useLocale();
+  const { theme } = useTheme();
 
   return (
     <footer className="relative pb-10">
@@ -71,6 +73,10 @@ export const Footer = () => {
           </a>
           {t.footer.modelNote}
         </p>
+
+        {theme === 'starwars' ? (
+          <p className="mono-label mt-6 text-center text-accent md:text-left">{t.footer.signoff}</p>
+        ) : null}
       </div>
     </footer>
   );

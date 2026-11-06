@@ -1,12 +1,13 @@
-import { Suspense, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
-import { Box3, Group, MathUtils, Vector3 } from 'three';
-import { asset } from '@/lib/cn';
+import { Group, MathUtils, Vector3 } from 'three';
 import { toggleStarWars } from '@/lib/themeStore';
+import { startScrollSpeed } from '@/lib/scrollSpeed';
+import { useTheme } from '@/hooks/useTheme';
 import { useShipClick } from './useShipClick';
+import { ShipChoreography } from './ship/ShipChoreography';
+import { useShipModel } from './ship/useShipModel';
 
-const MODEL = asset('models/millennium-falcon.glb');
 const SHIP_LENGTH = 1.5; // world units; the visible height at z=0 is ~7.3
 const SPEED = 0.55;
 const MAX_BANK = 0.9;
@@ -24,7 +25,7 @@ const flightPath = (t: number, width: number, height: number, out: Vector3): Vec
   );
 
 const Ship = () => {
-  const { scene } = useGLTF(MODEL, false);
+  const model = useShipModel(SHIP_LENGTH);
   const viewport = useThree((state) => state.viewport);
   const shipRef = useRef<Group>(null);
   const bankRef = useRef(0);
@@ -32,18 +33,6 @@ const Ship = () => {
   const timeRef = useRef(Math.random() * 40);
   const ahead = useMemo(() => new Vector3(), []);
   const updateHover = useShipClick(shipRef, toggleStarWars);
-
-  /* Normalise the model once: centred on its origin, nose along +Z, fixed length. */
-  const model = useMemo(() => {
-    const clone = scene.clone(true);
-    const box = new Box3().setFromObject(clone);
-    const size = box.getSize(new Vector3());
-    clone.position.sub(box.getCenter(new Vector3()));
-    const wrapper = new Group();
-    wrapper.add(clone);
-    wrapper.scale.setScalar(SHIP_LENGTH / Math.max(size.x, size.z));
-    return wrapper;
-  }, [scene]);
 
   useFrame((_state, delta) => {
     const ship = shipRef.current;
@@ -78,7 +67,13 @@ const Ship = () => {
   );
 };
 
-const SpaceshipCanvas = () => (
+const SpaceshipCanvas = () => {
+  const { theme } = useTheme();
+  const starWars = theme === 'starwars';
+
+  useEffect(startScrollSpeed, []);
+
+  return (
   <Canvas
     dpr={[1, 1.5]}
     camera={{ position: [0, 0, 10], fov: 40 }}
@@ -89,10 +84,12 @@ const SpaceshipCanvas = () => (
     <hemisphereLight args={['#dbeafe', '#0f172a', 0.8]} />
     <directionalLight position={[5, 6, 8]} intensity={2.4} />
     <directionalLight position={[-6, -2, -4]} intensity={1.2} color="#60a5fa" />
+    {starWars ? <directionalLight position={[-8, -6, 3]} intensity={1.6} color="#ff9a5c" /> : null}
     <Suspense fallback={null}>
-      <Ship />
+      {starWars ? <ShipChoreography /> : <Ship />}
     </Suspense>
   </Canvas>
-);
+  );
+};
 
 export default SpaceshipCanvas;

@@ -181,6 +181,20 @@
   color: var(--color-accent);
 }
 
+/* Star Wars mode hero: the name goes full-bleed and the orbit steps aside,
+   leaving the right of the screen to the Falcon. */
+.starwars #hero-heading {
+  max-width: none;
+  font-size: clamp(3.25rem, 10.5vw, 9.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.starwars [data-hero-orbit] {
+  display: none;
+}
+
 /* The flying ship is behind the content, so the page owns the pointer cue. */
 body[data-ship-hover='on'] {
   cursor: pointer;

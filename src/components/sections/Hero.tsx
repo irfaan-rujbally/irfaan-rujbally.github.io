@@ -33,6 +33,7 @@ export const Hero = () => {
 
       <div
         aria-hidden="true"
+        data-hero-orbit
         className="pointer-events-none absolute top-1/2 right-[-6%] hidden w-[42vw] max-w-[520px] -translate-y-[54%] lg:block xl:right-[2%]"
       >
         <HeroOrbit />

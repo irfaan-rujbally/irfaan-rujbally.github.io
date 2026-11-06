@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useTheme } from '@/hooks/useTheme';
+import { ScrambleText } from '@/components/fx/ScrambleText';
 import { fadeUp, reducedFade, viewportOnce } from '@/lib/motionVariants';
 import { cn } from '@/lib/cn';
 import type { SectionId } from '@/types';
@@ -25,6 +27,7 @@ export const SectionShell = ({
   contentClassName,
 }: SectionShellProps) => {
   const reduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
   const variants = reduced ? reducedFade : fadeUp;
   const headingId = `${id}-heading`;
 
@@ -44,7 +47,7 @@ export const SectionShell = ({
         >
           <p className="mono-label mb-4 flex items-center gap-2 text-accent">
             <span className="hairline-rule inline-block w-6" />
-            {eyebrow}
+            {theme === 'starwars' && !reduced ? <ScrambleText text={eyebrow} /> : eyebrow}
           </p>
           <h2 id={headingId} className="text-h2 text-ink">
             {heading}

@@ -157,3 +157,15 @@ export const drawMeteor = (ctx: Ctx, meteor: Meteor): void => {
   ctx.lineTo(tailX, tailY);
   ctx.stroke();
 };
+
+export type Body = { sprite: HTMLCanvasElement; x: number; y: number; depth: number; alpha: number; spin: number };
+
+/** The fixed cast of the backdrop, laid out in fractions of the viewport. */
+export const BODIES = (min: number): Body[] => [
+  { sprite: paintGalaxy(min * 0.42, ['rgb(150, 180, 255)', 'rgb(220, 160, 255)'], 0.5), x: 0.4, y: 0.16, depth: 0.04, alpha: 0.75, spin: 0.004 },
+  { sprite: paintGalaxy(min * 0.26, ['rgb(255, 190, 150)', 'rgb(160, 220, 255)'], -0.7), x: 0.16, y: 0.9, depth: 0.03, alpha: 0.6, spin: -0.006 },
+  { sprite: paintPlanet(min * 0.2, { light: '#f6d9a3', mid: '#c98d4b', dark: '#4a2a12', glow: 'rgba(255, 196, 120, 0.35)', bands: '#7a4a22' }), x: 0.9, y: 0.82, depth: 0.12, alpha: 0.95, spin: 0 },
+  { sprite: paintPlanet(min * 0.055, { light: '#bfe9ff', mid: '#3d86b8', dark: '#0b2238', glow: 'rgba(120, 200, 255, 0.4)', ring: '#a9c7d8' }), x: 0.1, y: 0.36, depth: 0.08, alpha: 0.95, spin: 0 },
+  { sprite: paintPlanet(min * 0.026, { light: '#e6e6e6', mid: '#8d8d8d', dark: '#232323', glow: 'rgba(255, 255, 255, 0.15)' }), x: 0.72, y: 0.2, depth: 0.06, alpha: 0.9, spin: 0 },
+  { sprite: paintPlanet(min * 0.016, { light: '#ffb3a1', mid: '#c2412d', dark: '#3a0d07', glow: 'rgba(255, 120, 90, 0.35)' }), x: 0.55, y: 0.62, depth: 0.05, alpha: 0.85, spin: 0 },
+];

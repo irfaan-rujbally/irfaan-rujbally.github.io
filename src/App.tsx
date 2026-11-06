@@ -10,6 +10,7 @@ import { Cursor } from '@/components/fx/Cursor';
 import { NoiseOverlay } from '@/components/fx/NoiseOverlay';
 import { SpaceField } from '@/components/fx/SpaceField';
 import { SpaceshipFlyby } from '@/components/fx/SpaceshipFlyby';
+import { StarWarsHud } from '@/components/fx/StarWarsHud';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Skills } from '@/components/sections/Skills';
@@ -44,8 +45,9 @@ export const App = () => {
         Skip to content
       </a>
 
-      {theme === 'starwars' ? <SpaceField /> : <AtomField />}
+      {theme === 'starwars' ? <SpaceField active={active} /> : <AtomField />}
       <SpaceshipFlyby />
+      {theme === 'starwars' ? <StarWarsHud active={active} /> : null}
       <Cursor />
       <NoiseOverlay />
       <Nav active={active} />
